@@ -61,6 +61,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 13)
 - 2026-11-12 (user request): Admin song manager — after signing in (evermore2026), a "Playlist" panel appears below the admin controls with "Add a song" upload + per-song remove. Songs are stored in MongoDB (`settings/playlist`) and uploaded to object storage; MusicPlayer now fetches the playlist from `/api/songs` (returns `src` as `/api/photos/{path}`) instead of hardcoded URLs, so songs can be changed any time after going live. Both uploaded songs (Bayit Shel Shalom, Nigun Chuppah) are seeded into the playlist. Also reverted the bottom marquee to light-pink style (attached to footer) and removed the music-button pulse. Verified: admin sign-in shows playlist with add/remove, player still plays.
 
+## Updates (continued 14)
+- 2026-11-12 (user request): Keepsake download — after signing in, a "Download keepsake" button (in admin controls below the Playlist) opens a clean printable page with cover (Charny & Yaakov Duvid, date, venue) and all wishes in columns with photos, names and dates; auto-opens the browser print dialog to save as PDF. Built client-side from /api/guestbook (Keepsake.jsx). Also since last update: guestbook subtitle Oxford comma, music button "Press Play", removed pulse. Verified: keepsake renders wishes + photo, print dialog opens.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.

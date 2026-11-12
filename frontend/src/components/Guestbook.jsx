@@ -1,9 +1,10 @@
 import { forwardRef, useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { Lock, Trash2 } from "lucide-react";
+import { Lock, Trash2, BookOpen } from "lucide-react";
 import { GuestbookForm } from "./GuestbookForm";
 import { SongManager } from "./SongManager";
+import { openKeepsake } from "./Keepsake";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -155,6 +156,15 @@ export const AdminSignIn = ({ adminPassword, songs, onSongsChange }) => {
     window.dispatchEvent(new CustomEvent("evermore:admin-off"));
   };
 
+  const downloadKeepsake = async () => {
+    try {
+      const res = await axios.get(`${API}/guestbook`);
+      openKeepsake(res.data, API);
+    } catch {
+      toast.error("Could not build the keepsake");
+    }
+  };
+
   return (
     <div data-testid="admin-signin-section" className="text-center pb-16 sm:pb-20">
       {!adminMode && !showAdminPrompt && (
@@ -201,6 +211,15 @@ export const AdminSignIn = ({ adminPassword, songs, onSongsChange }) => {
             </button>
           </div>
           <SongManager password={password} songs={songs} onSongsChange={onSongsChange} />
+          <div className="mt-4 flex justify-center">
+            <button
+              data-testid="download-keepsake"
+              onClick={downloadKeepsake}
+              className="inline-flex items-center gap-2 rounded-full border border-[#7A2E4B]/30 bg-white/70 px-5 py-2.5 text-xs uppercase tracking-[0.25em] text-[#7A2E4B] transition-all duration-300 hover:bg-[#D87093] hover:text-white hover:border-[#D87093]"
+            >
+              <BookOpen size={13} /> Download keepsake
+            </button>
+          </div>
         </>
       )}
     </div>
