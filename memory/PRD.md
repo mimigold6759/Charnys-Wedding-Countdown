@@ -28,6 +28,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 2)
 - 2026-11-12 (user agentic edits, batch 2): Venue changed to "Tiferes Elka 2 School Terrace, Monsey, New York 10977" (hero + footer); both marquees now identical ("Charny is getting married!! • January 24, 2027"); "is getting married!!" tagline taken out of pill bubble (plain italic text); "until forever begins" line removed from hero; "Leave a few words…" subtitle removed from guestbook header; admin button renamed "Couple sign-in" → "Sign in". All verified by screenshot.
 
+## Updates (continued 3)
+- 2026-11-12 (user request): Hero restructured per reference screenshot — removed top date/venue line; added "Can't wait to dance together!!" under the countdown; added two-column "The Day" (Sunday, 24 January 2027, Ceremony at 4:30 PM) / "The Venue" (Tiferes Elka, 2 School Terrace, Monsey, New York 10977, with Open in Maps link + Copy address button) block between the dance line and the Leave a wish button. Countdown target set to 2027-01-24T16:30:00. Footer venue line updated to match. Guestbook header: "The Guestbook" label removed, intro sentence restored. Verified via screenshots (desktop + mobile).
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.

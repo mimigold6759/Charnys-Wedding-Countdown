@@ -9,9 +9,12 @@ import { Guestbook } from "@/components/Guestbook";
 const WEDDING = {
   bride: "Charny",
   tagline: "is getting married!!",
+  danceLine: "Can't wait to dance together!!",
   dateLabel: "January 24, 2027",
-  venue: "Tiferes Elka 2 School Terrace, Monsey, New York 10977",
-  targetDate: "2027-01-24T16:00:00",
+  venueName: "Tiferes Elka",
+  venueAddress: "2 School Terrace, Monsey, New York 10977",
+  ceremonyTime: "4:30 PM",
+  targetDate: "2027-01-24T16:30:00",
 };
 
 function App() {
@@ -54,7 +57,7 @@ function App() {
           {WEDDING.bride} <span className="italic text-[#E89FAD] text-2xl sm:text-4xl">{WEDDING.tagline}</span>
         </p>
         <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-[#FFF9FB]/60">
-          {WEDDING.dateLabel} — {WEDDING.venue}
+          {WEDDING.dateLabel} — {WEDDING.venueName} {WEDDING.venueAddress}
         </p>
         <p className="mt-10 font-serif-display italic text-lg text-[#FFF9FB]/50">
           evermore
