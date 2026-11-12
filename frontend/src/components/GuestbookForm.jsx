@@ -1,9 +1,36 @@
 import { useRef, useState } from "react";
-import axios from "axios";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
 import { toast } from "sonner";
 import { ImagePlus, X } from "lucide-react";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const compressImage = (file) =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const maxDim = 900;
+      let { width, height } = img;
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL("image/jpeg", 0.72));
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
 
 export const GuestbookForm = ({ onPosted }) => {
   const [name, setName] = useState("");
@@ -14,10 +41,11 @@ export const GuestbookForm = ({ onPosted }) => {
   const fileRef = useRef(null);
 
   const pickPhoto = (e) => {
-    const file = e.target.files?.[0];
+    const files = e.target.files;
+    const file = files && files.length > 0 ? files[0] : null;
     if (!file) return;
-    if (file.size > 8 * 1024 * 1024) {
-      toast.error("Photo must be under 8MB");
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Photo must be under 10MB");
       return;
     }
     setPhoto(file);
@@ -39,19 +67,26 @@ export const GuestbookForm = ({ onPosted }) => {
     }
     setSubmitting(true);
     try {
-      const fd = new FormData();
-      fd.append("name", name.trim());
-      fd.append("message", message.trim());
-      if (photo) fd.append("photo", photo);
-      const res = await axios.post(`${API}/guestbook`, fd);
-      onPosted(res.data);
+      let photoData = null;
+      if (photo) {
+        photoData = await compressImage(photo);
+      }
+      const newEntry = {
+        name: name.trim(),
+        message: message.trim(),
+        photo_path: photoData,
+        created_at: new Date().toISOString(),
+      };
+      const docRef = await addDoc(collection(db, "guestbook"), newEntry);
+      onPosted({ id: docRef.id, ...newEntry });
       setName("");
       setMessage("");
       clearPhoto();
       window.dispatchEvent(new CustomEvent("evermore:wish-posted"));
       toast.success("Your wish is on the wall");
     } catch (err) {
-      toast.error(err.response?.data?.detail || "Something went wrong — please try again");
+      console.error(err);
+      toast.error("Something went wrong — please try again");
     } finally {
       setSubmitting(false);
     }
@@ -121,7 +156,7 @@ export const GuestbookForm = ({ onPosted }) => {
             <button
               type="button"
               data-testid="guestbook-photo-button"
-              onClick={() => fileRef.current?.click()}
+              onClick={() => fileRef.current && fileRef.current.click()}
               className="flex items-center gap-2 text-sm text-[#C75B80] hover:text-[#7A2E4B] transition-colors duration-300"
             >
               <ImagePlus size={18} />

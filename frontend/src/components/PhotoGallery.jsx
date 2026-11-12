@@ -1,19 +1,21 @@
 import { forwardRef, useEffect, useState } from "react";
-import axios from "axios";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "../firebase";
 import { X } from "lucide-react";
-
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
   const [photos, setPhotos] = useState([]);
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    const load = () =>
-      axios
-        .get(`${API}/guestbook`)
-        .then((res) => setPhotos(res.data.filter((e) => e.photo_path)))
-        .catch(() => {});
+    const load = async () => {
+      try {
+        const q = query(collection(db, "guestbook"), orderBy("created_at", "desc"));
+        const snap = await getDocs(q);
+        const all = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        setPhotos(all.filter((e) => e.photo_path));
+      } catch {}
+    };
     load();
     window.addEventListener("evermore:wish-posted", load);
     window.addEventListener("evermore:wish-deleted", load);
@@ -64,7 +66,7 @@ export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
               className="group relative bg-white p-2.5 pb-3 border border-[#E89FAD]/30 shadow-[0_4px_20px_rgba(216,112,147,0.15)] transition-all duration-300 hover:shadow-[0_12px_32px_rgba(216,112,147,0.3)] hover:-translate-y-1 hover:rotate-0 odd:-rotate-1 even:rotate-1 text-left cursor-pointer"
             >
               <img
-                src={`${API}/photos/${e.photo_path}`}
+                src={e.photo_path}
                 alt={`shared by ${e.name}`}
                 loading="lazy"
                 className="w-full aspect-square object-cover border border-[#E89FAD]/20"
@@ -81,7 +83,8 @@ export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
         <div
           data-testid="photo-lightbox"
           onClick={() => setSelected(null)}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#3B1E28]/85 backdrop-blur-sm p-4 sm:p-10 cursor-zoom-out"
+          style={{ zIndex: 100 }}
+          className="fixed inset-0 flex items-center justify-center bg-[#3B1E28]/85 backdrop-blur-sm p-4 sm:p-10 cursor-zoom-out"
         >
           <button
             data-testid="lightbox-close"
@@ -96,7 +99,7 @@ export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
             className="bg-white p-4 sm:p-6 pb-5 sm:pb-6 max-w-2xl w-full max-h-[90vh] overflow-auto shadow-[0_24px_80px_rgba(0,0,0,0.4)] border border-[#E89FAD]/30 cursor-default"
           >
             <img
-              src={`${API}/photos/${selected.photo_path}`}
+              src={selected.photo_path}
               alt={`shared by ${selected.name}`}
               className="w-full max-h-[55vh] object-contain border border-[#E89FAD]/20 bg-[#FFF9FB]"
             />

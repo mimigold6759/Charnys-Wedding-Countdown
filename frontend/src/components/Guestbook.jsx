@@ -1,12 +1,12 @@
 import { forwardRef, useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import { collection, getDocs, deleteDoc, doc, query, orderBy } from "firebase/firestore";
+import { db } from "../firebase";
 import { toast } from "sonner";
 import { Lock, Trash2, BookOpen } from "lucide-react";
 import { GuestbookForm } from "./GuestbookForm";
-import { SongManager } from "./SongManager";
 import { openKeepsake } from "./Keepsake";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const ADMIN_PASS = "charny2027";
 
 const WishCard = ({ entry, adminMode, onDelete }) => {
   const date = new Date(entry.created_at).toLocaleDateString(undefined, {
@@ -22,7 +22,7 @@ const WishCard = ({ entry, adminMode, onDelete }) => {
       {entry.photo_path && (
         <img
           data-testid="guestbook-wish-photo"
-          src={`${API}/photos/${entry.photo_path}`}
+          src={entry.photo_path}
           alt={`from ${entry.name}`}
           loading="lazy"
           className="w-full object-cover mb-4 border-[6px] border-white outline outline-1 outline-[#E89FAD]/40 shadow-[0_4px_16px_rgba(216,112,147,0.2)]"
@@ -55,23 +55,23 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [adminMode, setAdminMode] = useState(false);
-  const [password, setPassword] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`${API}/guestbook`)
-      .then((res) => setEntries(res.data))
-      .catch(() => toast.error("Could not load the guestbook"))
-      .finally(() => setLoading(false));
+    const loadEntries = async () => {
+      try {
+        const q = query(collection(db, "guestbook"), orderBy("created_at", "desc"));
+        const snap = await getDocs(q);
+        setEntries(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+      } catch {
+        toast.error("Could not load the guestbook");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadEntries();
 
-    const onAdminOn = (e) => {
-      setPassword(e.detail);
-      setAdminMode(true);
-    };
-    const onAdminOff = () => {
-      setPassword("");
-      setAdminMode(false);
-    };
+    const onAdminOn = () => setAdminMode(true);
+    const onAdminOff = () => setAdminMode(false);
     window.addEventListener("evermore:admin-on", onAdminOn);
     window.addEventListener("evermore:admin-off", onAdminOff);
     return () => {
@@ -86,12 +86,12 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/guestbook/${id}`, { data: { password } });
+      await deleteDoc(doc(db, "guestbook", id));
       setEntries((prev) => prev.filter((e) => e.id !== id));
       window.dispatchEvent(new CustomEvent("evermore:wish-deleted"));
       toast.success("Wish removed");
     } catch {
-      toast.error("Incorrect password");
+      toast.error("Could not delete wish");
     }
   };
 
@@ -125,24 +125,19 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
           ))}
         </div>
       )}
-
     </section>
   );
 });
 
-export const AdminSignIn = ({ adminPassword, songs, onSongsChange }) => {
+export const AdminSignIn = () => {
   const [adminMode, setAdminMode] = useState(false);
   const [showAdminPrompt, setShowAdminPrompt] = useState(false);
   const [password, setPassword] = useState("");
 
-  const unlockAdmin = async () => {
-    try {
-      await axios.delete(`${API}/guestbook/__probe__`, { data: { password } });
-    } catch (err) {
-      if (err.response?.status === 403) {
-        toast.error("Incorrect password");
-        return;
-      }
+  const unlockAdmin = () => {
+    if (password !== ADMIN_PASS) {
+      toast.error("Incorrect password");
+      return;
     }
     setAdminMode(true);
     setShowAdminPrompt(false);
@@ -158,8 +153,10 @@ export const AdminSignIn = ({ adminPassword, songs, onSongsChange }) => {
 
   const downloadKeepsake = async () => {
     try {
-      const res = await axios.get(`${API}/guestbook`);
-      openKeepsake(res.data, API);
+      const q = query(collection(db, "guestbook"), orderBy("created_at", "desc"));
+      const snap = await getDocs(q);
+      const data = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      openKeepsake(data, "");
     } catch {
       toast.error("Could not build the keepsake");
     }
@@ -210,14 +207,13 @@ export const AdminSignIn = ({ adminPassword, songs, onSongsChange }) => {
               Exit
             </button>
           </div>
-          <SongManager password={password} songs={songs} onSongsChange={onSongsChange} />
           <div className="mt-4 flex justify-center">
             <button
-              data-testid="download-keepsake"
+              data-testid="download-keepsake-button"
               onClick={downloadKeepsake}
-              className="inline-flex items-center gap-2 rounded-full border border-[#7A2E4B]/30 bg-white/70 px-5 py-2.5 text-xs uppercase tracking-[0.25em] text-[#7A2E4B] transition-all duration-300 hover:bg-[#D87093] hover:text-white hover:border-[#D87093]"
+              className="inline-flex items-center gap-2 rounded-full border border-[#7A2E4B]/20 bg-white/80 px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-[#7A2E4B] hover:bg-[#7A2E4B] hover:text-white transition-colors"
             >
-              <BookOpen size={13} /> Download keepsake
+              <BookOpen size={14} /> Download Keepsake
             </button>
           </div>
         </>
