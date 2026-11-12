@@ -37,6 +37,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 5)
 - 2026-11-12 (user agentic edits, batch 3): Footer now reads "Yaakov Duvid & Charny" in Great Vibes script (pink ampersand), venue removed from footer (date only), and "evermore" replaced with "made with love for Charny ♥". Verified by screenshot.
 
+## Updates (continued 6)
+- 2026-11-12 (user request): Wish alerts — every new guestbook wish now emails mimigold6759@gmail.com via Emergent-managed email (EMERGENT_EMAIL_KEY, EMAIL_FROM_NAME=Evermore, WISH_ALERT_EMAIL in backend/.env), fire-and-forget so posting never blocks. Test send returned 202 Accepted; test wish removed after. Requires Deploy for live site; add credits under Universal Key if sends ever show insufficient_credits.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.
