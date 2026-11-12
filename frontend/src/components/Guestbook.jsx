@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { Lock, Trash2 } from "lucide-react";
 import { GuestbookForm } from "./GuestbookForm";
+import { SongManager } from "./SongManager";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -128,7 +129,7 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
   );
 });
 
-export const AdminSignIn = () => {
+export const AdminSignIn = ({ adminPassword, songs, onSongsChange }) => {
   const [adminMode, setAdminMode] = useState(false);
   const [showAdminPrompt, setShowAdminPrompt] = useState(false);
   const [password, setPassword] = useState("");
@@ -186,18 +187,21 @@ export const AdminSignIn = () => {
         </div>
       )}
       {adminMode && (
-        <div data-testid="admin-mode-active" className="inline-flex items-center gap-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-[#D87093]">
-            Admin mode — hover a wish to remove it
-          </p>
-          <button
-            data-testid="admin-exit-button"
-            onClick={exitAdmin}
-            className="text-xs uppercase tracking-[0.25em] text-[#7A5965] underline underline-offset-4 hover:text-[#7A2E4B] transition-colors duration-300"
-          >
-            Exit
-          </button>
-        </div>
+        <>
+          <div data-testid="admin-mode-active" className="inline-flex items-center gap-4">
+            <p className="text-xs uppercase tracking-[0.25em] text-[#D87093]">
+              Admin mode — hover a wish to remove it
+            </p>
+            <button
+              data-testid="admin-exit-button"
+              onClick={exitAdmin}
+              className="text-xs uppercase tracking-[0.25em] text-[#7A5965] underline underline-offset-4 hover:text-[#7A2E4B] transition-colors duration-300"
+            >
+              Exit
+            </button>
+          </div>
+          <SongManager password={password} songs={songs} onSongsChange={onSongsChange} />
+        </>
       )}
     </div>
   );

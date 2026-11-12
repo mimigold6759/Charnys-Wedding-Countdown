@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "@/App.css";
 import { Toaster } from "sonner";
 import { Heart } from "lucide-react";
@@ -8,11 +8,10 @@ import { Petals } from "@/components/Petals";
 import { Guestbook, AdminSignIn } from "@/components/Guestbook";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { MusicPlayer } from "@/components/MusicPlayer";
+import { SongManager } from "@/components/SongManager";
+import axios from "axios";
 
-const SONGS = [
-  { src: "https://customer-assets-agu9un31.emergentagent.net/job_countdown-to-forever-3--1xik7bhz/artifacts/b92d9a6f61407b32_Mendy%20Moskowitz%2C%20Gedalya%20-%20Bayit%20Shel%20Shalom.mp3" },
-  { src: "https://customer-assets-agu9un31.emergentagent.net/job_countdown-to-forever-3--1xik7bhz/artifacts/d61812c7bd571bfb_Motty%20Ilowitz%2C%20Meilech%20Braunstein%20-%20Nigun%20Chuppah%20%28feat.%20Motty%20Ilowitz%20%26%20Meilech%20Braunstein%29.mp3" },
-];
+const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 const WEDDING = {
   bride: "Charny",
@@ -27,6 +26,26 @@ const WEDDING = {
 
 function App() {
   const guestbookRef = useRef(null);
+  const [songs, setSongs] = useState([]);
+  const [adminPassword, setAdminPassword] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`${API}/songs`)
+      .then((res) => setSongs(res.data.songs || []))
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const onAdminOn = (e) => setAdminPassword(e.detail);
+    const onAdminOff = () => setAdminPassword("");
+    window.addEventListener("evermore:admin-on", onAdminOn);
+    window.addEventListener("evermore:admin-off", onAdminOff);
+    return () => {
+      window.removeEventListener("evermore:admin-on", onAdminOn);
+      window.removeEventListener("evermore:admin-off", onAdminOff);
+    };
+  }, []);
 
   const scrollToGuestbook = () => {
     guestbookRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -67,13 +86,13 @@ function App() {
 
         <PhotoGallery />
 
-        {SONGS.length > 0 ? (
+        {songs.length > 0 ? (
           <div className="flex justify-center pt-2 pb-10">
-            <MusicPlayer playlist={SONGS} />
+            <MusicPlayer playlist={songs} />
           </div>
         ) : null}
 
-        <AdminSignIn />
+        <AdminSignIn onAdminChange={setAdminPassword} adminPassword={adminPassword} songs={songs} onSongsChange={setSongs} />
       </div>
 
       <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />

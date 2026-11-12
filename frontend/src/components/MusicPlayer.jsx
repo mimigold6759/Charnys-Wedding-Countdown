@@ -23,7 +23,7 @@ export const MusicPlayer = ({ playlist }) => {
       audio.removeEventListener("error", onError);
       audio.removeEventListener("ended", onEnded);
     };
-  }, [playlist.length]);
+  }, [playlist.length, trackIndex]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -43,10 +43,12 @@ export const MusicPlayer = ({ playlist }) => {
     }
   };
 
+  if (!current) return null;
+
   return (
     <>
       <audio ref={audioRef} preload="auto">
-        <source src={current.src} type="audio/mpeg" />
+        <source src={current.src.startsWith("/") ? `${process.env.REACT_APP_BACKEND_URL}${current.src}` : current.src} type="audio/mpeg" />
       </audio>
       <button
         data-testid="music-player-toggle"

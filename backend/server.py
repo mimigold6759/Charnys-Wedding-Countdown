@@ -291,6 +291,54 @@ async def list_entries():
     return [serialize(d) for d in docs]
 
 
+AUDIO_TYPES = {"audio/mpeg", "audio/mp3", "audio/wav", "audio/ogg", "audio/m4a", "audio/mp4", "audio/x-m4a"}
+MAX_AUDIO_BYTES = 25 * 1024 * 1024
+SONGS_DOC_ID = "playlist"
+
+
+def song_out(s):
+    return {"id": s["id"], "title": s["title"], "src": f"/api/photos/{s['path']}"}
+
+
+@api_router.get("/songs")
+async def get_songs():
+    doc = await db.settings.find_one({"_id": SONGS_DOC_ID})
+    return {"songs": [song_out(s) for s in (doc or {}).get("songs", [])]}
+
+
+@api_router.post("/songs")
+async def add_song(password: str = Form(...), title: str = Form(""), song: UploadFile = File(...)):
+    if not ADMIN_PASSWORD or password != ADMIN_PASSWORD:
+        raise HTTPException(status_code=403, detail="Incorrect password")
+    content_type = song.content_type or "audio/mpeg"
+    data = await song.read()
+    if len(data) > MAX_AUDIO_BYTES:
+        raise HTTPException(status_code=400, detail="Song must be under 25MB")
+    ext = song.filename.rsplit(".", 1)[-1].lower() if "." in song.filename else "mp3"
+    path = f"{APP_NAME}/songs/{uuid.uuid4()}.{ext}"
+    try:
+        result = put_object(path, data, content_type)
+    except Exception as e:
+        logging.getLogger(__name__).error("song upload failed: %s", e)
+        raise HTTPException(status_code=502, detail="Song upload failed, please try again")
+    doc = await db.settings.find_one({"_id": SONGS_DOC_ID})
+    songs = (doc or {}).get("songs", [])
+    songs.append({"id": str(uuid.uuid4()), "title": title.strip() or song.filename, "path": result["path"], "content_type": content_type})
+    await db.settings.update_one({"_id": SONGS_DOC_ID}, {"$set": {"songs": songs}}, upsert=True)
+    return {"songs": [song_out(s) for s in songs]}
+
+
+@api_router.delete("/songs/{song_id}")
+async def delete_song(song_id: str, body: AdminDeleteRequest):
+    if not ADMIN_PASSWORD or body.password != ADMIN_PASSWORD:
+        raise HTTPException(status_code=403, detail="Incorrect password")
+    doc = await db.settings.find_one({"_id": SONGS_DOC_ID})
+    songs = (doc or {}).get("songs", [])
+    songs = [s for s in songs if s["id"] != song_id]
+    await db.settings.update_one({"_id": SONGS_DOC_ID}, {"$set": {"songs": songs}}, upsert=True)
+    return {"songs": [song_out(s) for s in songs]}
+
+
 @api_router.delete("/guestbook/{entry_id}")
 async def delete_entry(entry_id: str, body: AdminDeleteRequest):
     if not ADMIN_PASSWORD or body.password != ADMIN_PASSWORD:
