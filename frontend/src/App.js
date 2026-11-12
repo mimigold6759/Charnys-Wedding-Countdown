@@ -8,7 +8,6 @@ import { Petals } from "@/components/Petals";
 import { Guestbook, AdminSignIn } from "@/components/Guestbook";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { MusicPlayer } from "@/components/MusicPlayer";
-import { SongManager } from "@/components/SongManager";
 import axios from "axios";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -77,18 +76,17 @@ function App() {
     <div className="grain floral-page min-h-screen relative" data-testid="evermore-app">
       <Petals count={16} />
       <Hero config={WEDDING} onGuestbookClick={scrollToGuestbook} />
-      {/* hero now shows: Charny / is getting married!! */}
 
-      <div className="flex justify-center pt-2 pb-10">
-  <MusicPlayer playlist={songs} />
-</div>
+      <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
+
+      <div className="relative z-10">
+        <Guestbook ref={guestbookRef} />
+
         <PhotoGallery />
 
-        {songs.length > 0 ? (
-          <div className="flex justify-center pt-2 pb-10">
-            <MusicPlayer playlist={songs} />
-          </div>
-        ) : null}
+        <div className="flex justify-center pt-2 pb-10">
+          <MusicPlayer playlist={songs} />
+        </div>
 
         <AdminSignIn onAdminChange={setAdminPassword} adminPassword={adminPassword} songs={songs} onSongsChange={setSongs} />
       </div>
