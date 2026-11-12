@@ -1,24 +1,36 @@
 import { useEffect, useRef, useState } from "react";
 import { Music, Pause } from "lucide-react";
 
-export const MusicPlayer = ({ src, title, artist }) => {
+export const MusicPlayer = ({ playlist }) => {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
+  const [trackIndex, setTrackIndex] = useState(0);
   const [available, setAvailable] = useState(false);
+
+  const current = playlist[trackIndex];
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     const onReady = () => setAvailable(true);
     const onError = () => setAvailable(false);
+    const onEnded = () => setTrackIndex((i) => (i + 1) % playlist.length);
     audio.addEventListener("canplaythrough", onReady);
     audio.addEventListener("error", onError);
-    audio.load();
+    audio.addEventListener("ended", onEnded);
     return () => {
       audio.removeEventListener("canplaythrough", onReady);
       audio.removeEventListener("error", onError);
+      audio.removeEventListener("ended", onEnded);
     };
-  }, [src]);
+  }, [playlist.length]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.load();
+    if (playing) audio.play().catch(() => {});
+  }, [trackIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggle = () => {
     const audio = audioRef.current;
@@ -31,11 +43,11 @@ export const MusicPlayer = ({ src, title, artist }) => {
     }
   };
 
-  if (!src) return null;
-
   return (
     <>
-      <audio ref={audioRef} src={src} loop preload="auto" />
+      <audio ref={audioRef} preload="auto">
+        <source src={current.src} type="audio/mpeg" />
+      </audio>
       <button
         data-testid="music-player-toggle"
         onClick={toggle}
@@ -52,11 +64,10 @@ export const MusicPlayer = ({ src, title, artist }) => {
         </span>
         <span className="text-left leading-tight">
           <span className="block text-[10px] uppercase tracking-[0.25em] text-[#7A5965]">
-            {playing ? "Now playing" : "Play our song"}
+            {playing ? "Now playing" : "Play our songs"}
           </span>
-          <span className="block font-serif-display italic text-sm text-[#7A2E4B]">
-            {title}
-            {artist ? ` — ${artist}` : ""}
+          <span className="block font-serif-display italic text-sm text-[#7A2E4B] max-w-[180px] truncate">
+            {current.title}
           </span>
         </span>
       </button>
