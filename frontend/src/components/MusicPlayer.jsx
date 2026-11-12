@@ -62,7 +62,7 @@ export const MusicPlayer = ({ playlist }) => {
         </span>
         <span className="text-left leading-tight">
           <span className="block font-serif-display italic text-sm text-[#7A2E4B]">
-            {playing ? "Now playing" : "Play our songs"}
+            {playing ? "Now playing" : "Press Play"}
           </span>
         </span>
       </button>
