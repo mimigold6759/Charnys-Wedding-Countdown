@@ -52,6 +52,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 10)
 - 2026-11-12 (user request): Lightbox view — tapping any Photo Gallery picture opens a full overlay showing the large photo with its wish, guest name and date; closes via X button, backdrop tap, or Escape. Also since last update: guestbook heading "A Wall of Mazel Tovs", intro "Leave a wish, a memory or a photograph that will last long after the last dance ends.", form label "Your mazel tov wish", admin placeholder "Password". Verified lightbox open/close with a test wish (Cousin Devorah, left on preview wall).
 
+## Updates (continued 11)
+- 2026-11-12 (user request): Music player — floating "Play our songs" button (bottom-left) loops both uploaded MP3s (Bayit Shel Shalom, Nigun Chuppah) one after the other on repeat; no titles displayed. SONGS in App.js points at the two uploaded artifact URLs. Verified play/pause working (audio element playing, label toggles to "Now playing"). Note: browser autoplay policy requires a guest tap to start audio.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.

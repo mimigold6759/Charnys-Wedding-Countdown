@@ -10,9 +10,9 @@ import { PhotoGallery } from "@/components/PhotoGallery";
 import { MusicPlayer } from "@/components/MusicPlayer";
 
 const SONGS = [
-  { src: process.env.REACT_APP_SONG_URL_1 || "", title: "Our First Song" },
-  { src: process.env.REACT_APP_SONG_URL_2 || "", title: "Our Second Song" },
-].filter((s) => s.src);
+  { src: "https://customer-assets-agu9un31.emergentagent.net/job_countdown-to-forever-3--1xik7bhz/artifacts/b92d9a6f61407b32_Mendy%20Moskowitz%2C%20Gedalya%20-%20Bayit%20Shel%20Shalom.mp3" },
+  { src: "https://customer-assets-agu9un31.emergentagent.net/job_countdown-to-forever-3--1xik7bhz/artifacts/d61812c7bd571bfb_Motty%20Ilowitz%2C%20Meilech%20Braunstein%20-%20Nigun%20Chuppah%20%28feat.%20Motty%20Ilowitz%20%26%20Meilech%20Braunstein%29.mp3" },
+];
 
 const WEDDING = {
   bride: "Charny",

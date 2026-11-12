@@ -63,11 +63,8 @@ export const MusicPlayer = ({ playlist }) => {
           {playing ? <Pause size={16} /> : <Music size={16} />}
         </span>
         <span className="text-left leading-tight">
-          <span className="block text-[10px] uppercase tracking-[0.25em] text-[#7A5965]">
+          <span className="block font-serif-display italic text-sm text-[#7A2E4B]">
             {playing ? "Now playing" : "Play our songs"}
-          </span>
-          <span className="block font-serif-display italic text-sm text-[#7A2E4B] max-w-[180px] truncate">
-            {current.title}
           </span>
         </span>
       </button>
