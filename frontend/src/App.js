@@ -79,11 +79,9 @@ function App() {
       <Hero config={WEDDING} onGuestbookClick={scrollToGuestbook} />
       {/* hero now shows: Charny / is getting married!! */}
 
-      <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
-
-      <div className="relative z-10">
-        <Guestbook ref={guestbookRef} />
-
+      <div className="flex justify-center pt-2 pb-10">
+  <MusicPlayer playlist={songs} />
+</div>
         <PhotoGallery />
 
         {songs.length > 0 ? (
