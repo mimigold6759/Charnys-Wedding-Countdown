@@ -5,7 +5,7 @@ import { Heart } from "lucide-react";
 import { Hero } from "@/components/Hero";
 import { Marquee } from "@/components/Marquee";
 import { Petals } from "@/components/Petals";
-import { Guestbook } from "@/components/Guestbook";
+import { Guestbook, AdminSignIn } from "@/components/Guestbook";
 import { PhotoGallery } from "@/components/PhotoGallery";
 
 const WEDDING = {
@@ -53,6 +53,8 @@ function App() {
       <Guestbook ref={guestbookRef} />
 
       <PhotoGallery />
+
+      <AdminSignIn />
 
       <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
 

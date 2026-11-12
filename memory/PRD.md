@@ -43,6 +43,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 7)
 - 2026-11-12 (user request): "Moments shared" photo gallery section between guestbook and bottom marquee — grid of guest photos in polaroid-style frames (white mat, rose border, slight rotation, name caption) on a blush panel; refreshes live when a wish is posted or deleted (custom events). Wish-card photos also got the framed treatment. Two sample wishes (Cousin Leah, Aunt Rivka) left on the preview wall from verification.
 
+## Updates (continued 8)
+- 2026-11-12 (user agentic edits, batch 4): Gallery heading changed to "Photo Gallery" (subtitle removed); admin Sign in moved out of the guestbook section to below the photo gallery — admin state now syncs between sections via evermore:admin-on/off events; delete buttons appear on the wall when signed in, Exit returns to guest view. Verified end to end.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.

@@ -53,7 +53,6 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [adminMode, setAdminMode] = useState(false);
-  const [showAdminPrompt, setShowAdminPrompt] = useState(false);
   const [password, setPassword] = useState("");
 
   useEffect(() => {
@@ -62,40 +61,37 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
       .then((res) => setEntries(res.data))
       .catch(() => toast.error("Could not load the guestbook"))
       .finally(() => setLoading(false));
+
+    const onAdminOn = (e) => {
+      setPassword(e.detail);
+      setAdminMode(true);
+    };
+    const onAdminOff = () => {
+      setPassword("");
+      setAdminMode(false);
+    };
+    window.addEventListener("evermore:admin-on", onAdminOn);
+    window.addEventListener("evermore:admin-off", onAdminOff);
+    return () => {
+      window.removeEventListener("evermore:admin-on", onAdminOn);
+      window.removeEventListener("evermore:admin-off", onAdminOff);
+    };
   }, []);
 
   const onPosted = useCallback((entry) => {
     setEntries((prev) => [entry, ...prev]);
   }, []);
 
-  const tryDelete = async (id, pwd) => {
+  const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API}/guestbook/${id}`, { data: { password: pwd } });
+      await axios.delete(`${API}/guestbook/${id}`, { data: { password } });
       setEntries((prev) => prev.filter((e) => e.id !== id));
       window.dispatchEvent(new CustomEvent("evermore:wish-deleted"));
       toast.success("Wish removed");
-      return true;
     } catch {
       toast.error("Incorrect password");
-      return false;
     }
   };
-
-  const unlockAdmin = async () => {
-    try {
-      await axios.delete(`${API}/guestbook/__probe__`, { data: { password } });
-    } catch (err) {
-      if (err.response?.status === 403) {
-        toast.error("Incorrect password");
-        return;
-      }
-    }
-    setAdminMode(true);
-    setShowAdminPrompt(false);
-    toast.success("Admin mode on — delete buttons are visible");
-  };
-
-  const handleDelete = (id) => tryDelete(id, password);
 
   return (
     <section ref={ref} data-testid="guestbook-section" className="relative px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto py-20 sm:py-28 md:py-36">
@@ -128,51 +124,81 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
         </div>
       )}
 
-      <div className="mt-16 text-center">
-        {!adminMode && !showAdminPrompt && (
-          <button
-            data-testid="admin-mode-toggle"
-            onClick={() => setShowAdminPrompt(true)}
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#7A5965] hover:text-[#7A2E4B] transition-colors duration-300"
-          >
-            <Lock size={13} /> Sign in
-          </button>
-        )}
-        {showAdminPrompt && !adminMode && (
-          <div data-testid="admin-password-form" className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md border border-[#E89FAD]/30 p-3 pl-5">
-            <input
-              data-testid="admin-password-input"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && unlockAdmin()}
-              placeholder="Couple's password"
-              className="bg-transparent outline-none text-sm text-[#3B1E28] placeholder:text-[#7A5965]"
-            />
-            <button
-              data-testid="admin-unlock-button"
-              onClick={unlockAdmin}
-              className="rounded-full bg-[#7A2E4B] px-5 py-2 text-xs uppercase tracking-[0.2em] text-white hover:bg-[#C75B80] transition-colors"
-            >
-              Unlock
-            </button>
-          </div>
-        )}
-        {adminMode && (
-          <div data-testid="admin-mode-active" className="inline-flex items-center gap-4">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#D87093]">
-              Admin mode — hover a wish to remove it
-            </p>
-            <button
-              data-testid="admin-exit-button"
-              onClick={() => setAdminMode(false)}
-              className="text-xs uppercase tracking-[0.25em] text-[#7A5965] underline underline-offset-4 hover:text-[#7A2E4B] transition-colors duration-300"
-            >
-              Exit
-            </button>
-          </div>
-        )}
-      </div>
     </section>
   );
 });
+
+export const AdminSignIn = () => {
+  const [adminMode, setAdminMode] = useState(false);
+  const [showAdminPrompt, setShowAdminPrompt] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const unlockAdmin = async () => {
+    try {
+      await axios.delete(`${API}/guestbook/__probe__`, { data: { password } });
+    } catch (err) {
+      if (err.response?.status === 403) {
+        toast.error("Incorrect password");
+        return;
+      }
+    }
+    setAdminMode(true);
+    setShowAdminPrompt(false);
+    window.dispatchEvent(new CustomEvent("evermore:admin-on", { detail: password }));
+    toast.success("Admin mode on — delete buttons are visible");
+  };
+
+  const exitAdmin = () => {
+    setAdminMode(false);
+    setPassword("");
+    window.dispatchEvent(new CustomEvent("evermore:admin-off"));
+  };
+
+  return (
+    <div data-testid="admin-signin-section" className="text-center pb-16 sm:pb-20">
+      {!adminMode && !showAdminPrompt && (
+        <button
+          data-testid="admin-mode-toggle"
+          onClick={() => setShowAdminPrompt(true)}
+          className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#7A5965] hover:text-[#7A2E4B] transition-colors duration-300"
+        >
+          <Lock size={13} /> Sign in
+        </button>
+      )}
+      {showAdminPrompt && !adminMode && (
+        <div data-testid="admin-password-form" className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md border border-[#E89FAD]/30 p-3 pl-5">
+          <input
+            data-testid="admin-password-input"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && unlockAdmin()}
+            placeholder="Couple's password"
+            className="bg-transparent outline-none text-sm text-[#3B1E28] placeholder:text-[#7A5965]"
+          />
+          <button
+            data-testid="admin-unlock-button"
+            onClick={unlockAdmin}
+            className="rounded-full bg-[#7A2E4B] px-5 py-2 text-xs uppercase tracking-[0.2em] text-white hover:bg-[#C75B80] transition-colors"
+          >
+            Unlock
+          </button>
+        </div>
+      )}
+      {adminMode && (
+        <div data-testid="admin-mode-active" className="inline-flex items-center gap-4">
+          <p className="text-xs uppercase tracking-[0.25em] text-[#D87093]">
+            Admin mode — hover a wish to remove it
+          </p>
+          <button
+            data-testid="admin-exit-button"
+            onClick={exitAdmin}
+            className="text-xs uppercase tracking-[0.25em] text-[#7A5965] underline underline-offset-4 hover:text-[#7A2E4B] transition-colors duration-300"
+          >
+            Exit
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
