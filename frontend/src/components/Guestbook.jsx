@@ -117,7 +117,7 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
           Be the first to leave a wish.
         </p>
       ) : (
-        <div data-testid="guestbook-masonry-wall" className="masonry">
+        <div data-testid="guestbook-masonry-wall" className="reveal-on-scroll masonry">
           {entries.map((e) => (
             <WishCard key={e.id} entry={e} adminMode={adminMode} onDelete={handleDelete} />
           ))}

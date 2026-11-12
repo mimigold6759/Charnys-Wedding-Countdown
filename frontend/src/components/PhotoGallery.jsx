@@ -27,7 +27,7 @@ export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
       data-testid="photo-gallery-section"
       className="relative px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto py-20 sm:py-28"
     >
-      <div className="is-visible reveal-on-scroll text-center mb-12 sm:mb-16">
+      <div className="reveal-on-scroll text-center mb-12 sm:mb-16">
         <h2 className="font-serif-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-[#3B1E28]">
           Photo Gallery
         </h2>
@@ -41,7 +41,7 @@ export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
           Photos guests share will bloom here.
         </p>
       ) : (
-        <div data-testid="photo-gallery-grid" className="is-visible reveal-on-scroll grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 bg-[#FBE9EF]/90 backdrop-blur-sm border border-[#E89FAD]/25 rounded-lg p-6 sm:p-10 shadow-[0_8px_40px_rgba(216,112,147,0.12)]">
+        <div data-testid="photo-gallery-grid" className="reveal-on-scroll grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 bg-[#FBE9EF]/90 backdrop-blur-sm border border-[#E89FAD]/25 rounded-lg p-6 sm:p-10 shadow-[0_8px_40px_rgba(216,112,147,0.12)]">
           {photos.map((e) => (
             <figure
               key={e.id}
