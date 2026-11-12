@@ -9,9 +9,9 @@ import { Guestbook } from "@/components/Guestbook";
 const WEDDING = {
   bride: "Emma",
   groom: "Liam",
-  dateLabel: "June 12, 2027",
+  dateLabel: "January 24, 2027",
   venue: "Rosewood Hall, Napa Valley",
-  targetDate: "2027-06-12T16:00:00",
+  targetDate: "2027-01-24T16:00:00",
 };
 
 function App() {
@@ -42,14 +42,7 @@ function App() {
       <Petals count={16} />
       <Hero config={WEDDING} onGuestbookClick={scrollToGuestbook} />
 
-      <Marquee
-        items={[
-          "Emma & Liam",
-          "June 12, 2027",
-          "Rosewood Hall",
-          "forever begins",
-        ]}
-      />
+      <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
 
       <Guestbook ref={guestbookRef} />
 
