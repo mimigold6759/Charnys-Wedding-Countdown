@@ -119,7 +119,11 @@ export const Hero = ({ config, onGuestbookClick }) => {
           </span>
           <span
             className="reveal-line block text-xl sm:text-2xl md:text-3xl italic font-light text-[#7A2E4B] mt-4 sm:mt-6"
-            style={{ animationDelay: "0.7s" }}
+            style={{
+              animationDelay: "0.7s",
+              letterSpacing: "0.55em",
+              marginRight: "-0.55em",
+            }}
           >
             {config.tagline}
           </span>

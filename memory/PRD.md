@@ -64,6 +64,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 14)
 - 2026-11-12 (user request): Keepsake download — after signing in, a "Download keepsake" button (in admin controls below the Playlist) opens a clean printable page with cover (Charny & Yaakov Duvid, date, venue) and all wishes in columns with photos, names and dates; auto-opens the browser print dialog to save as PDF. Built client-side from /api/guestbook (Keepsake.jsx). Also since last update: guestbook subtitle Oxford comma, music button "Press Play", removed pulse. Verified: keepsake renders wishes + photo, print dialog opens.
 
+## Updates (continued 15)
+- 2026-11-12 (user agentic edits, batch 5): Guestbook heading → "Mazel Tov Wall"; subtitle → "Leave a message, a memory, or a photo that will last long after the dancing ends."; hero tagline "is getting married!!" letter-spaced (0.55em) so it spans the same width as "Charny" above it for a uniform look.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.
