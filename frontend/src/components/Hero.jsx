@@ -108,6 +108,13 @@ export const Hero = ({ config, onGuestbookClick }) => {
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-4 gap-8 sm:gap-12 py-16">
         <h1 className="font-serif-display text-[#3B1E28] leading-[1.02]">
           <span
+            data-testid="save-the-date-bubble"
+            className="reveal-line inline-block rounded-full border border-[#E89FAD]/40 bg-white/60 backdrop-blur-sm px-6 py-2 text-xs sm:text-sm uppercase tracking-[0.35em] font-sans font-semibold text-[#C75B80] shadow-[0_4px_20px_rgba(216,112,147,0.18)] mb-5 sm:mb-7"
+            style={{ animationDelay: "0.15s" }}
+          >
+            Save the date!
+          </span>
+          <span
             className="reveal-line block text-8xl sm:text-9xl md:text-[10rem] font-medium tracking-tight drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)]"
             style={{ animationDelay: "0.3s" }}
           >
