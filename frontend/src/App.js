@@ -36,10 +36,16 @@ function App() {
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.1, rootMargin: "0px 0px -5% 0px" }
     );
     document.querySelectorAll(".reveal-on-scroll").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    const fallback = setTimeout(() => {
+      document.querySelectorAll(".reveal-on-scroll").forEach((el) => el.classList.add("is-visible"));
+    }, 1200);
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallback);
+    };
   }, []);
 
   return (

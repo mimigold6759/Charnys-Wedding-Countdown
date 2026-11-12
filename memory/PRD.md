@@ -46,6 +46,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 8)
 - 2026-11-12 (user agentic edits, batch 4): Gallery heading changed to "Photo Gallery" (subtitle removed); admin Sign in moved out of the guestbook section to below the photo gallery — admin state now syncs between sections via evermore:admin-on/off events; delete buttons appear on the wall when signed in, Exit returns to guest view. Verified end to end.
 
+## Updates (continued 9)
+- 2026-11-12 (bug fix, user-reported): Guestbook form, wish wall and Photo Gallery appeared "disappeared" — cause was the scroll-reveal animation (`.reveal-on-scroll` starts at opacity 0) with an IntersectionObserver that could miss firing under fast scroll / tall-viewport conditions. Content was never deleted. Fix: added a 1.2s fallback in App.js that force-reveals all sections regardless of observer, so content can never stay invisible. Verified: all 5 reveal elements visible, 4 wishes + form on wall, 3 photos in gallery.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.
