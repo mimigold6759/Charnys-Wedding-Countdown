@@ -97,10 +97,10 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
     <section ref={ref} data-testid="guestbook-section" className="relative px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto py-20 sm:py-28 md:py-36">
       <div className="reveal-on-scroll text-center mb-14 sm:mb-20">
         <h2 className="font-serif-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-[#3B1E28]">
-          A wall of wishes
+          A Wall of Mazel Tovs
         </h2>
         <p className="mt-5 text-base sm:text-lg text-[#3B1E28]/70 max-w-xl mx-auto leading-relaxed">
-          Leave a few words — and a photograph, if you like — for Charny to keep forever.
+          Leave a wish, a memory or a photograph that will last long after the last dance ends.
         </p>
       </div>
 

@@ -80,7 +80,7 @@ export const GuestbookForm = ({ onPosted }) => {
         </div>
         <div>
           <label htmlFor="gb-message" className="block text-xs uppercase tracking-[0.25em] font-semibold text-[#7A2E4B]/70 mb-3">
-            Your wish
+            Your mazel tov wish
           </label>
           <textarea
             id="gb-message"
