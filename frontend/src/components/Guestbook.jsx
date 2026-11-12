@@ -103,9 +103,6 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
         <h2 className="font-serif-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-[#3B1E28]">
           A wall of wishes
         </h2>
-        <p className="mt-5 text-base sm:text-lg text-[#3B1E28]/70 max-w-xl mx-auto leading-relaxed">
-          Leave a few words — and a photograph, if you like — for Charny to keep forever.
-        </p>
       </div>
 
       <div className="reveal-on-scroll mb-16 sm:mb-24">
@@ -135,7 +132,7 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
             onClick={() => setShowAdminPrompt(true)}
             className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#7A5965] hover:text-[#7A2E4B] transition-colors duration-300"
           >
-            <Lock size={13} /> Couple sign-in
+            <Lock size={13} /> Sign in
           </button>
         )}
         {showAdminPrompt && !adminMode && (

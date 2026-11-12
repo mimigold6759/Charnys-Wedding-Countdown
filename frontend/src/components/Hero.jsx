@@ -57,7 +57,7 @@ export const Hero = ({ config, onGuestbookClick }) => {
             {config.bride}
           </span>
           <span
-            className="reveal-line block text-xl sm:text-2xl md:text-3xl italic font-light text-[#7A2E4B] bg-white/50 backdrop-blur-sm rounded-full inline-block px-6 py-2 mt-4 sm:mt-6"
+            className="reveal-line block text-xl sm:text-2xl md:text-3xl italic font-light text-[#7A2E4B] mt-4 sm:mt-6"
             style={{ animationDelay: "0.85s" }}
           >
             {config.tagline}
@@ -67,13 +67,6 @@ export const Hero = ({ config, onGuestbookClick }) => {
         <div className="reveal-line" style={{ animationDelay: "1.5s" }}>
           <Countdown target={config.targetDate} />
         </div>
-
-        <p
-          className="reveal-line font-serif-display italic text-lg sm:text-2xl text-[#7A2E4B]/80"
-          style={{ animationDelay: "1.8s" }}
-        >
-          until forever begins
-        </p>
       </div>
 
       <div

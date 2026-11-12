@@ -10,7 +10,7 @@ const WEDDING = {
   bride: "Charny",
   tagline: "is getting married!!",
   dateLabel: "January 24, 2027",
-  venue: "Rosewood Hall, Napa Valley",
+  venue: "Tiferes Elka 2 School Terrace, Monsey, New York 10977",
   targetDate: "2027-01-24T16:00:00",
 };
 
@@ -47,7 +47,7 @@ function App() {
 
       <Guestbook ref={guestbookRef} />
 
-      <Marquee items={["two hearts", "one promise", "a lifetime to go"]} />
+      <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
 
       <footer data-testid="site-footer" className="relative bg-[#4A1229]/95 backdrop-blur-sm text-[#FFF9FB] px-4 sm:px-8 py-16 sm:py-24 text-center">
         <p className="font-serif-display text-4xl sm:text-6xl tracking-tight mb-4">

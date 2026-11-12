@@ -25,6 +25,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued)
 - 2026-11-12 (user agentic edits): Site personalized — hero is now "Charny" in huge font with "is getting married!!" pill tagline underneath (single name, no couple names); nav monogram is "YD&C"; marquees read "Charny is getting married!! • January 24, 2027" (Rosewood Hall / forever begins removed); wedding date moved to January 24, 2027 (countdown retargeted); footer and guestbook copy updated to Charny. Venue remains "Rosewood Hall, Napa Valley" placeholder.
 
+## Updates (continued 2)
+- 2026-11-12 (user agentic edits, batch 2): Venue changed to "Tiferes Elka 2 School Terrace, Monsey, New York 10977" (hero + footer); both marquees now identical ("Charny is getting married!! • January 24, 2027"); "is getting married!!" tagline taken out of pill bubble (plain italic text); "until forever begins" line removed from hero; "Leave a few words…" subtitle removed from guestbook header; admin button renamed "Couple sign-in" → "Sign in". All verified by screenshot.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.
