@@ -48,6 +48,7 @@ export const GuestbookForm = ({ onPosted }) => {
       setName("");
       setMessage("");
       clearPhoto();
+      window.dispatchEvent(new CustomEvent("evermore:wish-posted"));
       toast.success("Your wish is on the wall");
     } catch (err) {
       toast.error(err.response?.data?.detail || "Something went wrong — please try again");
