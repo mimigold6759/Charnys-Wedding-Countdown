@@ -7,6 +7,9 @@ import { Marquee } from "@/components/Marquee";
 import { Petals } from "@/components/Petals";
 import { Guestbook, AdminSignIn } from "@/components/Guestbook";
 import { PhotoGallery } from "@/components/PhotoGallery";
+import { MusicPlayer } from "@/components/MusicPlayer";
+
+const SONG_URL = process.env.REACT_APP_SONG_URL || "";
 
 const WEDDING = {
   bride: "Charny",
@@ -65,6 +68,10 @@ function App() {
       </div>
 
       <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
+
+      {SONG_URL ? (
+        <MusicPlayer src={SONG_URL} title="Our Song" artist="Yaakov Duvid & Charny" />
+      ) : null}
 
       <footer data-testid="site-footer" className="relative z-10 bg-[#4A1229]/95 backdrop-blur-sm text-[#FFF9FB] px-4 sm:px-8 py-16 sm:py-24 text-center">
         <p className="font-script text-4xl sm:text-6xl text-[#FFF9FB] drop-shadow-[0_4px_14px_rgba(120,120,130,0.35)] mb-4">
