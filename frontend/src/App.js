@@ -57,7 +57,7 @@ function App() {
           Yaakov Duvid <span className="text-[#E89FAD]">&</span> Charny
         </p>
         <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-[#FFF9FB]/60">
-          {WEDDING.dateLabel} — {WEDDING.venueName} {WEDDING.venueAddress}
+          {WEDDING.dateLabel}
         </p>
         <p className="mt-10 font-serif-display italic text-lg text-[#FFF9FB]/50">
           evermore
