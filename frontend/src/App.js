@@ -6,6 +6,7 @@ import { Hero } from "@/components/Hero";
 import { Marquee } from "@/components/Marquee";
 import { Petals } from "@/components/Petals";
 import { Guestbook } from "@/components/Guestbook";
+import { PhotoGallery } from "@/components/PhotoGallery";
 
 const WEDDING = {
   bride: "Charny",
@@ -50,6 +51,8 @@ function App() {
       <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
 
       <Guestbook ref={guestbookRef} />
+
+      <PhotoGallery />
 
       <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
 

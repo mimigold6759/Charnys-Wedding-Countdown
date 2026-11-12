@@ -23,7 +23,7 @@ const WishCard = ({ entry, adminMode, onDelete }) => {
           src={`${API}/photos/${entry.photo_path}`}
           alt={`from ${entry.name}`}
           loading="lazy"
-          className="w-full object-cover mb-4 border border-[#E89FAD]/20"
+          className="w-full object-cover mb-4 border-[6px] border-white outline outline-1 outline-[#E89FAD]/40 shadow-[0_4px_16px_rgba(216,112,147,0.2)]"
         />
       )}
       <p className="font-serif-display text-xl sm:text-2xl leading-snug text-[#3B1E28] mb-4">
@@ -72,6 +72,7 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
     try {
       await axios.delete(`${API}/guestbook/${id}`, { data: { password: pwd } });
       setEntries((prev) => prev.filter((e) => e.id !== id));
+      window.dispatchEvent(new CustomEvent("evermore:wish-deleted"));
       toast.success("Wish removed");
       return true;
     } catch {

@@ -40,6 +40,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 6)
 - 2026-11-12 (user request): Wish alerts — every new guestbook wish now emails mimigold6759@gmail.com via Emergent-managed email (EMERGENT_EMAIL_KEY, EMAIL_FROM_NAME=Evermore, WISH_ALERT_EMAIL in backend/.env), fire-and-forget so posting never blocks. Test send returned 202 Accepted; test wish removed after. Requires Deploy for live site; add credits under Universal Key if sends ever show insufficient_credits.
 
+## Updates (continued 7)
+- 2026-11-12 (user request): "Moments shared" photo gallery section between guestbook and bottom marquee — grid of guest photos in polaroid-style frames (white mat, rose border, slight rotation, name caption) on a blush panel; refreshes live when a wish is posted or deleted (custom events). Wish-card photos also got the framed treatment. Two sample wishes (Cousin Leah, Aunt Rivka) left on the preview wall from verification.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.
