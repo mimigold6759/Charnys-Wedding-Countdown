@@ -158,9 +158,18 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
           </div>
         )}
         {adminMode && (
-          <p data-testid="admin-mode-active" className="text-xs uppercase tracking-[0.25em] text-[#D87093]">
-            Admin mode — hover a wish to remove it
-          </p>
+          <div data-testid="admin-mode-active" className="inline-flex items-center gap-4">
+            <p className="text-xs uppercase tracking-[0.25em] text-[#D87093]">
+              Admin mode — hover a wish to remove it
+            </p>
+            <button
+              data-testid="admin-exit-button"
+              onClick={() => setAdminMode(false)}
+              className="text-xs uppercase tracking-[0.25em] text-[#7A5965] underline underline-offset-4 hover:text-[#7A2E4B] transition-colors duration-300"
+            >
+              Exit
+            </button>
+          </div>
         )}
       </div>
     </section>
