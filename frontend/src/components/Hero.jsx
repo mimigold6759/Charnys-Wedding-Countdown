@@ -30,9 +30,6 @@ const Details = ({ config }) => {
           24 <span className="font-light">January</span>
         </p>
         <p className="font-serif-display text-2xl sm:text-3xl text-[#3B1E28]/80 mt-1">2027</p>
-        <p className="mt-5 text-sm sm:text-base text-[#3B1E28]/70">
-          Ceremony at {config.ceremonyTime}
-        </p>
       </div>
 
       <div className="sm:border-l sm:border-[#7A2E4B]/15 sm:pl-14">
