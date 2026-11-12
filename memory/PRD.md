@@ -49,6 +49,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 9)
 - 2026-11-12 (bug fix, user-reported): Guestbook form, wish wall and Photo Gallery appeared "disappeared" — cause was the scroll-reveal animation (`.reveal-on-scroll` starts at opacity 0) with an IntersectionObserver that could miss firing under fast scroll / tall-viewport conditions. Content was never deleted. Fix: added a 1.2s fallback in App.js that force-reveals all sections regardless of observer, so content can never stay invisible. Verified: all 5 reveal elements visible, 4 wishes + form on wall, 3 photos in gallery.
 
+## Updates (continued 10)
+- 2026-11-12 (user request): Lightbox view — tapping any Photo Gallery picture opens a full overlay showing the large photo with its wish, guest name and date; closes via X button, backdrop tap, or Escape. Also since last update: guestbook heading "A Wall of Mazel Tovs", intro "Leave a wish, a memory or a photograph that will last long after the last dance ends.", form label "Your mazel tov wish", admin placeholder "Password". Verified lightbox open/close with a test wish (Cousin Devorah, left on preview wall).
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.

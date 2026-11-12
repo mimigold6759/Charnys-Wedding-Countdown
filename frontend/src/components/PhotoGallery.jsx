@@ -1,10 +1,12 @@
 import { forwardRef, useEffect, useState } from "react";
 import axios from "axios";
+import { X } from "lucide-react";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
   const [photos, setPhotos] = useState([]);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     const load = () =>
@@ -20,6 +22,18 @@ export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
       window.removeEventListener("evermore:wish-deleted", load);
     };
   }, []);
+
+  useEffect(() => {
+    const onKey = (e) => e.key === "Escape" && setSelected(null);
+    if (selected) {
+      window.addEventListener("keydown", onKey);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [selected]);
 
   return (
     <section
@@ -43,10 +57,11 @@ export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
       ) : (
         <div data-testid="photo-gallery-grid" className="reveal-on-scroll grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 bg-[#FBE9EF]/90 backdrop-blur-sm border border-[#E89FAD]/25 rounded-lg p-6 sm:p-10 shadow-[0_8px_40px_rgba(216,112,147,0.12)]">
           {photos.map((e) => (
-            <figure
+            <button
               key={e.id}
               data-testid="gallery-photo-card"
-              className="group relative bg-white p-2.5 pb-3 border border-[#E89FAD]/30 shadow-[0_4px_20px_rgba(216,112,147,0.15)] transition-all duration-300 hover:shadow-[0_12px_32px_rgba(216,112,147,0.3)] hover:-translate-y-1 hover:rotate-0 odd:-rotate-1 even:rotate-1"
+              onClick={() => setSelected(e)}
+              className="group relative bg-white p-2.5 pb-3 border border-[#E89FAD]/30 shadow-[0_4px_20px_rgba(216,112,147,0.15)] transition-all duration-300 hover:shadow-[0_12px_32px_rgba(216,112,147,0.3)] hover:-translate-y-1 hover:rotate-0 odd:-rotate-1 even:rotate-1 text-left cursor-pointer"
             >
               <img
                 src={`${API}/photos/${e.photo_path}`}
@@ -57,8 +72,50 @@ export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
               <figcaption className="mt-2 text-center font-serif-display italic text-sm text-[#7A2E4B]">
                 — {e.name}
               </figcaption>
-            </figure>
+            </button>
           ))}
+        </div>
+      )}
+
+      {selected && (
+        <div
+          data-testid="photo-lightbox"
+          onClick={() => setSelected(null)}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#3B1E28]/85 backdrop-blur-sm p-4 sm:p-10 cursor-zoom-out"
+        >
+          <button
+            data-testid="lightbox-close"
+            onClick={() => setSelected(null)}
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 rounded-full bg-white/90 p-2.5 text-[#4A1229] hover:bg-[#E89FAD] hover:text-white transition-colors duration-300"
+            aria-label="Close"
+          >
+            <X size={20} />
+          </button>
+          <figure
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white p-4 sm:p-6 pb-5 sm:pb-6 max-w-2xl w-full max-h-[90vh] overflow-auto shadow-[0_24px_80px_rgba(0,0,0,0.4)] border border-[#E89FAD]/30 cursor-default"
+          >
+            <img
+              src={`${API}/photos/${selected.photo_path}`}
+              alt={`shared by ${selected.name}`}
+              className="w-full max-h-[55vh] object-contain border border-[#E89FAD]/20 bg-[#FFF9FB]"
+            />
+            <figcaption className="mt-5 text-center">
+              <p className="font-serif-display text-xl sm:text-2xl leading-snug text-[#3B1E28]">
+                “{selected.message}”
+              </p>
+              <p className="mt-3 font-serif-display italic text-lg text-[#C75B80]">
+                — {selected.name}
+              </p>
+              <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-[#7A5965] font-mono-digits">
+                {new Date(selected.created_at).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+            </figcaption>
+          </figure>
         </div>
       )}
     </section>
