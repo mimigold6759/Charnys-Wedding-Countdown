@@ -67,14 +67,18 @@ function App() {
 
         <PhotoGallery />
 
+        {SONGS.length > 0 ? (
+          <div className="flex justify-center pt-2 pb-10">
+            <MusicPlayer playlist={SONGS} />
+          </div>
+        ) : null}
+
         <AdminSignIn />
       </div>
 
-      <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
+      <Marquee items={["Charny is getting married!!", "January 24, 2027"]} attached />
 
-      {SONGS.length > 0 ? <MusicPlayer playlist={SONGS} /> : null}
-
-      <footer data-testid="site-footer" className="relative z-10 bg-[#4A1229]/95 backdrop-blur-sm text-[#FFF9FB] px-4 sm:px-8 py-16 sm:py-24 text-center">
+      <footer data-testid="site-footer" className="relative z-10 bg-[#4A1229] text-[#FFF9FB] px-4 sm:px-8 py-16 sm:py-24 text-center border-t-0">
         <p className="font-script text-4xl sm:text-6xl text-[#FFF9FB] drop-shadow-[0_4px_14px_rgba(120,120,130,0.35)] mb-4">
           Yaakov Duvid <span className="text-[#E89FAD]">&</span> Charny
         </p>

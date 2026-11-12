@@ -55,6 +55,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 11)
 - 2026-11-12 (user request): Music player — floating "Play our songs" button (bottom-left) loops both uploaded MP3s (Bayit Shel Shalom, Nigun Chuppah) one after the other on repeat; no titles displayed. SONGS in App.js points at the two uploaded artifact URLs. Verified play/pause working (audio element playing, label toggles to "Now playing"). Note: browser autoplay policy requires a guest tap to start audio.
 
+## Updates (continued 12)
+- 2026-11-12 (user request): Bottom marquee now attached seamlessly to the maroon footer (dark maroon strip, no gap, italic rose text); "Play our songs" music button moved from fixed corner to centered on the page directly above the Sign in button.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.
