@@ -53,8 +53,8 @@ function App() {
       <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
 
       <footer data-testid="site-footer" className="relative bg-[#4A1229]/95 backdrop-blur-sm text-[#FFF9FB] px-4 sm:px-8 py-16 sm:py-24 text-center">
-        <p className="font-serif-display text-4xl sm:text-6xl tracking-tight mb-4">
-          {WEDDING.bride} <span className="italic text-[#E89FAD] text-2xl sm:text-4xl">{WEDDING.tagline}</span>
+        <p className="font-script text-4xl sm:text-6xl text-[#FFF9FB] drop-shadow-[0_4px_14px_rgba(120,120,130,0.35)] mb-4">
+          Yaakov Duvid <span className="text-[#E89FAD]">&</span> Charny
         </p>
         <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-[#FFF9FB]/60">
           {WEDDING.dateLabel} — {WEDDING.venueName} {WEDDING.venueAddress}
