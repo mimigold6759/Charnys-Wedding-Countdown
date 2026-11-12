@@ -99,10 +99,12 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
   return (
     <section ref={ref} data-testid="guestbook-section" className="relative px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto py-20 sm:py-28 md:py-36">
       <div className="reveal-on-scroll text-center mb-14 sm:mb-20">
-        <p className="text-xs uppercase tracking-[0.35em] font-semibold text-[#D87093] mb-4">The Guestbook</p>
         <h2 className="font-serif-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-[#3B1E28]">
           A wall of wishes
         </h2>
+        <p className="mt-5 text-base sm:text-lg text-[#3B1E28]/70 max-w-xl mx-auto leading-relaxed">
+          Leave a few words — and a photograph, if you like — for Charny to keep forever.
+        </p>
       </div>
 
       <div className="reveal-on-scroll mb-16 sm:mb-24">
