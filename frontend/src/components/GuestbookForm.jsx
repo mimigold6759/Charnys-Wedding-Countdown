@@ -60,11 +60,11 @@ export const GuestbookForm = ({ onPosted }) => {
     <form
       data-testid="guestbook-form"
       onSubmit={submit}
-      className="bg-white border border-[#4A1525]/15 shadow-sm p-6 sm:p-10 max-w-2xl mx-auto"
+      className="bg-white/80 backdrop-blur-md border border-white/80 shadow-[0_8px_40px_rgba(216,112,147,0.15)] p-6 sm:p-10 max-w-2xl mx-auto"
     >
       <div className="grid gap-6">
         <div>
-          <label htmlFor="gb-name" className="block text-xs uppercase tracking-[0.25em] font-semibold text-[#4A1525]/70 mb-3">
+          <label htmlFor="gb-name" className="block text-xs uppercase tracking-[0.25em] font-semibold text-[#7A2E4B]/70 mb-3">
             Your name
           </label>
           <input
@@ -74,11 +74,11 @@ export const GuestbookForm = ({ onPosted }) => {
             onChange={(e) => setName(e.target.value)}
             maxLength={80}
             placeholder="e.g. Aunt Sophie"
-            className="w-full bg-transparent border-b border-[#4A1525]/25 focus:border-[#D4AF37] outline-none py-3 font-serif-display text-2xl text-[#4A1525] placeholder:text-[#8C827A]/60 transition-colors duration-300"
+            className="w-full bg-transparent border-b border-[#E89FAD]/40 focus:border-[#D87093] outline-none py-3 font-serif-display text-2xl text-[#3B1E28] placeholder:text-[#7A5965]/50 transition-colors duration-300"
           />
         </div>
         <div>
-          <label htmlFor="gb-message" className="block text-xs uppercase tracking-[0.25em] font-semibold text-[#4A1525]/70 mb-3">
+          <label htmlFor="gb-message" className="block text-xs uppercase tracking-[0.25em] font-semibold text-[#7A2E4B]/70 mb-3">
             Your wish
           </label>
           <textarea
@@ -89,7 +89,7 @@ export const GuestbookForm = ({ onPosted }) => {
             maxLength={1000}
             rows={4}
             placeholder="Write something they'll read for years…"
-            className="w-full bg-transparent border-b border-[#4A1525]/25 focus:border-[#D4AF37] outline-none py-3 text-base text-[#2C2627] placeholder:text-[#8C827A]/60 resize-none transition-colors duration-300"
+            className="w-full bg-transparent border-b border-[#E89FAD]/40 focus:border-[#D87093] outline-none py-3 text-base text-[#3B1E28] placeholder:text-[#7A5965]/50 resize-none transition-colors duration-300"
           />
         </div>
 
@@ -105,12 +105,12 @@ export const GuestbookForm = ({ onPosted }) => {
           />
           {preview ? (
             <div className="relative inline-block" data-testid="guestbook-photo-preview">
-              <img src={preview} alt="Selected" className="h-32 w-auto border border-[#4A1525]/15 object-cover" />
+              <img src={preview} alt="Selected" className="h-32 w-auto border border-[#E89FAD]/30 object-cover" />
               <button
                 type="button"
                 data-testid="guestbook-photo-remove"
                 onClick={clearPhoto}
-                className="absolute -top-2 -right-2 rounded-full bg-[#4A1525] text-[#FAF7F2] p-1.5 hover:bg-[#7A3549] transition-colors"
+                className="absolute -top-2 -right-2 rounded-full bg-[#7A2E4B] text-white p-1.5 hover:bg-[#C75B80] transition-colors"
                 aria-label="Remove photo"
               >
                 <X size={14} />
@@ -121,10 +121,10 @@ export const GuestbookForm = ({ onPosted }) => {
               type="button"
               data-testid="guestbook-photo-button"
               onClick={() => fileRef.current?.click()}
-              className="flex items-center gap-2 text-sm text-[#7A3549] hover:text-[#4A1525] transition-colors duration-300"
+              className="flex items-center gap-2 text-sm text-[#C75B80] hover:text-[#7A2E4B] transition-colors duration-300"
             >
               <ImagePlus size={18} />
-              Add a photo <span className="text-[#8C827A]">(optional)</span>
+              Add a photo <span className="text-[#7A5965]">(optional)</span>
             </button>
           )}
         </div>
@@ -133,7 +133,7 @@ export const GuestbookForm = ({ onPosted }) => {
           type="submit"
           data-testid="guestbook-submit-button"
           disabled={submitting}
-          className="mt-2 rounded-full bg-[#4A1525] px-10 py-4 text-xs uppercase tracking-[0.3em] text-[#FAF7F2] transition-all duration-500 hover:bg-[#7A3549] hover:shadow-lg disabled:opacity-50 disabled:cursor-wait"
+          className="mt-2 rounded-full bg-[#D87093] px-10 py-4 text-xs uppercase tracking-[0.3em] text-white transition-all duration-500 hover:bg-[#C75B80] hover:shadow-[0_10px_30px_rgba(216,112,147,0.4)] disabled:opacity-50 disabled:cursor-wait"
         >
           {submitting ? "Placing your wish…" : "Place it on the wall"}
         </button>

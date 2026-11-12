@@ -38,14 +38,14 @@ function App() {
   }, []);
 
   return (
-    <div className="grain bg-[#FAF7F2] min-h-screen" data-testid="evermore-app">
+    <div className="grain floral-page min-h-screen" data-testid="evermore-app">
       <Petals count={16} />
       <Hero config={WEDDING} onGuestbookClick={scrollToGuestbook} />
 
       <Marquee
         items={[
           "Emma & Liam",
-          "October 24, 2026",
+          "June 12, 2027",
           "Rosewood Hall",
           "forever begins",
         ]}
@@ -55,14 +55,14 @@ function App() {
 
       <Marquee items={["two hearts", "one promise", "a lifetime to go"]} />
 
-      <footer data-testid="site-footer" className="bg-[#4A1525] text-[#FAF7F2] px-4 sm:px-8 py-16 sm:py-24 text-center">
+      <footer data-testid="site-footer" className="relative bg-[#4A1229]/95 backdrop-blur-sm text-[#FFF9FB] px-4 sm:px-8 py-16 sm:py-24 text-center">
         <p className="font-serif-display text-4xl sm:text-6xl tracking-tight mb-4">
-          {WEDDING.bride} <span className="italic text-[#D4AF37]">&</span> {WEDDING.groom}
+          {WEDDING.bride} <span className="italic text-[#E89FAD]">&</span> {WEDDING.groom}
         </p>
-        <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-[#FAF7F2]/60">
+        <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-[#FFF9FB]/60">
           {WEDDING.dateLabel} — {WEDDING.venue}
         </p>
-        <p className="mt-10 font-serif-display italic text-lg text-[#FAF7F2]/50">
+        <p className="mt-10 font-serif-display italic text-lg text-[#FFF9FB]/50">
           evermore
         </p>
       </footer>

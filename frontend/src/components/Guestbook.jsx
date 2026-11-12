@@ -15,7 +15,7 @@ const WishCard = ({ entry, adminMode, onDelete }) => {
   return (
     <article
       data-testid="guestbook-wish-card"
-      className="group relative bg-white border border-[#4A1525]/15 shadow-sm p-5 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+      className="group relative bg-white/80 backdrop-blur-md border border-white/80 shadow-[0_4px_24px_rgba(216,112,147,0.12)] p-5 transition-all duration-300 hover:shadow-[0_12px_36px_rgba(216,112,147,0.25)] hover:-translate-y-1"
     >
       {entry.photo_path && (
         <img
@@ -23,22 +23,22 @@ const WishCard = ({ entry, adminMode, onDelete }) => {
           src={`${API}/photos/${entry.photo_path}`}
           alt={`from ${entry.name}`}
           loading="lazy"
-          className="w-full object-cover mb-4 border border-[#4A1525]/10"
+          className="w-full object-cover mb-4 border border-[#E89FAD]/20"
         />
       )}
-      <p className="font-serif-display text-xl sm:text-2xl leading-snug text-[#2C2627] mb-4">
+      <p className="font-serif-display text-xl sm:text-2xl leading-snug text-[#3B1E28] mb-4">
         “{entry.message}”
       </p>
       <footer className="flex items-end justify-between gap-3">
         <div>
-          <p className="font-serif-display italic text-lg text-[#7A3549]">— {entry.name}</p>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[#8C827A] mt-1 font-mono-digits">{date}</p>
+          <p className="font-serif-display italic text-lg text-[#C75B80]">— {entry.name}</p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[#7A5965] mt-1 font-mono-digits">{date}</p>
         </div>
         {adminMode && (
           <button
             data-testid="guestbook-delete-button"
             onClick={() => onDelete(entry.id)}
-            className="rounded-full border border-[#4A1525]/20 p-2 text-[#7A3549] hover:bg-[#4A1525] hover:text-[#FAF7F2] transition-colors duration-300"
+            className="rounded-full border border-[#7A2E4B]/20 p-2 text-[#C75B80] hover:bg-[#7A2E4B] hover:text-white transition-colors duration-300"
             aria-label={`Delete wish from ${entry.name}`}
           >
             <Trash2 size={15} />
@@ -88,7 +88,6 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
         toast.error("Incorrect password");
         return;
       }
-      // 404 on the probe id means the password was accepted
     }
     setAdminMode(true);
     setShowAdminPrompt(false);
@@ -100,11 +99,11 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
   return (
     <section ref={ref} data-testid="guestbook-section" className="relative px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto py-20 sm:py-28 md:py-36">
       <div className="reveal-on-scroll text-center mb-14 sm:mb-20">
-        <p className="text-xs uppercase tracking-[0.35em] font-semibold text-[#D4AF37] mb-4">The Guestbook</p>
-        <h2 className="font-serif-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-[#4A1525]">
+        <p className="text-xs uppercase tracking-[0.35em] font-semibold text-[#D87093] mb-4">The Guestbook</p>
+        <h2 className="font-serif-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-[#3B1E28]">
           A wall of wishes
         </h2>
-        <p className="mt-5 text-base sm:text-lg text-[#2C2627]/70 max-w-xl mx-auto leading-relaxed">
+        <p className="mt-5 text-base sm:text-lg text-[#3B1E28]/70 max-w-xl mx-auto leading-relaxed">
           Leave a few words — and a photograph, if you like — for Emma & Liam to keep forever.
         </p>
       </div>
@@ -114,11 +113,11 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
       </div>
 
       {loading ? (
-        <p data-testid="guestbook-loading" className="text-center text-[#8C827A] font-serif-display italic text-xl">
+        <p data-testid="guestbook-loading" className="text-center text-[#7A5965] font-serif-display italic text-xl">
           Gathering wishes…
         </p>
       ) : entries.length === 0 ? (
-        <p data-testid="guestbook-empty" className="text-center font-serif-display italic text-2xl text-[#8C827A]">
+        <p data-testid="guestbook-empty" className="text-center font-serif-display italic text-2xl text-[#7A5965]">
           Be the first to leave a wish.
         </p>
       ) : (
@@ -134,13 +133,13 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
           <button
             data-testid="admin-mode-toggle"
             onClick={() => setShowAdminPrompt(true)}
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#8C827A] hover:text-[#4A1525] transition-colors duration-300"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[#7A5965] hover:text-[#7A2E4B] transition-colors duration-300"
           >
             <Lock size={13} /> Couple sign-in
           </button>
         )}
         {showAdminPrompt && !adminMode && (
-          <div data-testid="admin-password-form" className="inline-flex items-center gap-3 bg-white border border-[#4A1525]/15 p-3 pl-5">
+          <div data-testid="admin-password-form" className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md border border-[#E89FAD]/30 p-3 pl-5">
             <input
               data-testid="admin-password-input"
               type="password"
@@ -148,19 +147,19 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && unlockAdmin()}
               placeholder="Couple's password"
-              className="bg-transparent outline-none text-sm text-[#2C2627] placeholder:text-[#8C827A]"
+              className="bg-transparent outline-none text-sm text-[#3B1E28] placeholder:text-[#7A5965]"
             />
             <button
               data-testid="admin-unlock-button"
               onClick={unlockAdmin}
-              className="rounded-full bg-[#4A1525] px-5 py-2 text-xs uppercase tracking-[0.2em] text-[#FAF7F2] hover:bg-[#7A3549] transition-colors"
+              className="rounded-full bg-[#7A2E4B] px-5 py-2 text-xs uppercase tracking-[0.2em] text-white hover:bg-[#C75B80] transition-colors"
             >
               Unlock
             </button>
           </div>
         )}
         {adminMode && (
-          <p data-testid="admin-mode-active" className="text-xs uppercase tracking-[0.25em] text-[#D4AF37]">
+          <p data-testid="admin-mode-active" className="text-xs uppercase tracking-[0.25em] text-[#D87093]">
             Admin mode — hover a wish to remove it
           </p>
         )}

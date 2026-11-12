@@ -19,6 +19,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 - Admin "Couple sign-in": password unlocks delete buttons on every wish; wrong password rejected.
 - Verified end-to-end: post with photo + photo display, text-only post, delete with correct password, 403 with wrong password, countdown ticking, mobile/tablet/desktop layouts.
 
+## Updates
+- 2026-11-12: Background fully redesigned per user request — whimsical light-pink floral world: hero is a full-bleed blush peony macro photo with a soft pink scrim, all page sections sit over a fixed repeating peony backdrop (opacity ~16%), glassmorphism wish cards and form (white/80 + backdrop-blur + rose shadows), palette shifted to rose/blush (#D87093 primary, #7A2E4B deep rose text, #3B1E28 dark), petals recolored to pink family, footer deep burgundy. Reference image provided by user (blush peonies). Countdown, guestbook, admin delete all re-verified.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.

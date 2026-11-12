@@ -3,14 +3,14 @@ export const Marquee = ({ items }) => {
   return (
     <div
       data-testid="editorial-marquee"
-      className="overflow-hidden border-y border-[#4A1525]/10 bg-[#F5ECE8] py-5 select-none"
+      className="overflow-hidden border-y border-[#E89FAD]/25 bg-white/50 backdrop-blur-sm py-5 select-none"
       aria-hidden="true"
     >
       <div className="marquee-track">
         {[0, 1].map((half) => (
           <span
             key={half}
-            className="whitespace-nowrap font-serif-display italic text-xl sm:text-2xl tracking-wide text-[#7A3549]/70 pr-2"
+            className="whitespace-nowrap font-serif-display italic text-xl sm:text-2xl tracking-wide text-[#C75B80]/60 pr-2"
           >
             {line.repeat(3)}
           </span>

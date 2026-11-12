@@ -18,7 +18,7 @@ const PETAL_SVG = (size, hue) => (
   </svg>
 );
 
-const HUES = ["#E8B4B8", "#E3A0A8", "#EFC6CB", "#D98E99", "#F0D3D5"];
+const HUES = ["#FFB6C1", "#FFC0CB", "#FFD1DC", "#F4A7BB", "#FFF0F5"];
 
 export const Petals = ({ count = 16 }) => {
   const petals = useMemo(

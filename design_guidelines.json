@@ -1,100 +1,122 @@
 {
-  "project_name": "Evermore - Editorial Wedding Single Page & Interactive Guestbook",
-  "archetype": "Architectural / Editorial Luxury & Romance",
-  "design_tone": "Cinematic, high-fashion editorial keepsake, intimate, warm ivory and deep wine contrast with floating rose petals",
-  "app_type": "hybrid landing page with interactive guestbook",
-  "typography": {
-    "font_family_pairing": {
-      "display_heading": "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-      "accent_italic": "'Cormorant Garamond', serif (italic style, tracking-wide)",
-      "body_text": "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif",
-      "mono_accent": "'JetBrains Mono', monospace (for live countdown digits & timestamps)"
-    },
-    "scale": {
-      "hero_title": "text-5xl sm:text-6xl md:text-7xl font-serif tracking-tight leading-[1.05]",
-      "section_heading": "text-3xl sm:text-4xl md:text-5xl font-serif tracking-tight text-wine",
-      "subsection_title": "text-xl sm:text-2xl font-serif font-medium text-wine-800",
-      "body_text": "text-base sm:text-lg font-sans leading-relaxed text-charcoal/80",
-      "caption_label": "text-xs uppercase tracking-[0.25em] font-sans font-semibold text-wine/70",
-      "countdown_number": "text-4xl sm:text-6xl md:text-7xl font-mono font-light tracking-tight text-wine"
-    }
+  "theme": {
+    "name": "Whimsical Blush & Floral Editorial",
+    "mode": "light",
+    "concept": "A romantic, airy wedding experience framed by lush light pink peonies, garden roses, floating petals, and soft-focus glassmorphism with high contrast readability."
   },
   "colors": {
-    "theme_mode": "Light Editorial Warmth with Deep Wine Structural Accents",
+    "archetype": "Pastel & Soft (Whimsical Romantic Editorial)",
     "palette": {
-      "bg_primary_ivory": "#FAF7F2",
-      "bg_card_blush": "#F5ECE8",
-      "bg_card_pure_white": "#FFFFFF",
-      "text_wine_deep": "#4A1525",
-      "text_wine_muted": "#7A3549",
-      "text_charcoal": "#2C2627",
-      "text_muted_taupe": "#8C827A",
-      "accent_gold": "#D4AF37",
-      "accent_gold_hover": "#B89528",
-      "border_wine_subtle": "rgba(74, 21, 37, 0.12)",
-      "border_gold_subtle": "rgba(212, 175, 55, 0.25)",
-      "petal_rose": "#E8B4B8",
-      "overlay_scrim": "rgba(44, 38, 39, 0.45)"
+      "primary": "#D87093",
+      "primary_hover": "#C75B80",
+      "primary_text": "#7A2E4B",
+      "background_page": "#FFF9FB",
+      "background_card": "rgba(255, 255, 255, 0.78)",
+      "background_scrim": "rgba(255, 245, 248, 0.75)",
+      "hero_overlay": "linear-gradient(to bottom, rgba(74, 18, 41, 0.45) 0%, rgba(255, 240, 245, 0.65) 60%, rgba(255, 249, 251, 0.95) 100%)",
+      "accent_rose": "#E89FAD",
+      "accent_sage": "#7A8B7B",
+      "accent_champagne": "#F3E8DF",
+      "border_soft": "rgba(232, 159, 173, 0.35)",
+      "border_card": "rgba(255, 255, 255, 0.9)",
+      "text_dark": "#3B1E28",
+      "text_muted": "#7A5965",
+      "text_light": "#FFFFFF"
+    },
+    "rules": {
+      "tinted_grey": "Never use pure #000000 or neutral #808080. Always tint dark text with deep rose-charcoal (#3B1E28) or deep burgundy (#4A1229) for emotional depth.",
+      "contrast_check": "Ensure text overlay has scrim or semi-opaque backing (bg-white/80 or dark overlay) meeting APCA and minimum 4.5:1 WCAG AA contrast.",
+      "glassmorphism": "Use backdrop-blur-md bg-white/75 border border-white/80 shadow-pink-100/50 for all cards and floating panels."
     }
   },
+  "typography": {
+    "font_family_heading": "Cormorant Garamond, Playfair Display, serif",
+    "font_family_body": "Plus Jakarta Sans, Inter, sans-serif",
+    "font_family_script": "Great Vibes, Alex Brush, cursive",
+    "hierarchy": {
+      "hero_h1": "text-4xl sm:text-5xl lg:text-6xl font-serif tracking-tight text-white drop-shadow-md",
+      "section_h2": "text-2xl sm:text-3xl lg:text-4xl font-serif text-[#3B1E28] tracking-tight",
+      "card_h3": "text-xl sm:text-2xl font-serif text-[#4A1229]",
+      "subheading": "text-base sm:text-lg font-light text-[#7A5965] tracking-wide uppercase",
+      "body": "text-sm sm:text-base text-[#3B1E28] leading-relaxed",
+      "caption": "text-xs sm:text-sm text-[#7A5965]"
+    }
+  },
+  "background_art_direction": {
+    "hero_background": {
+      "url": "https://images.unsplash.com/photo-1582794543462-0d7922e50cf5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwxfHx3aGltc2ljYWwlMjBsaWdodCUyMHBpbmslMjBmbG93ZXJzJTIwYWVzdGhldGljJTIwcm9tYW50aWMlMjB3ZWRkaW5nJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3OTQ0NTgzMTR8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Lush whimsical macro bloom of soft pink peonies and carnations filling the hero section with fairy-tale romance.",
+      "scrim_treatment": "bg-gradient-to-b from-black/50 via-black/35 to-[#FFF9FB] with backdrop-blur-[2px]"
+    },
+    "page_sections_background": {
+      "pattern_url": "https://images.unsplash.com/photo-1640901646021-74984db23c54?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHw0fHxsaWdodCUyMHBpbmslMjBmbG93ZXJzJTIwc2VhbWxlc3MlMjBwYXR0ZXJuJTIwd2FsbHBhcGVyJTIwcGFzdGVsJTIwcGVvbmllcyUyMHJvc2VzfGVufDB8fHx8MTc5NDQ1ODMxNHww&ixlib=rb-4.1.0&q=85",
+      "description": "Seamless soft pink floral wallpaper pattern blended into section backgrounds with low opacity (opacity-15 to opacity-25) and warm ivory gradient backing.",
+      "accents": [
+        {
+          "url": "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwyfHxzb2Z0JTIwcGluayUyMHBlb25pZXMlMjByb3NlcyUyMGZsb3JhbCUyMGJhY2tncm91bmQlMjB0ZXh0dXJlJTIwaGlnaCUyMHJlc29sdXRpb258ZW58MHx8fHwxNzk0NDU4MzIwfDA&ixlib=rb-4.1.0&q=85",
+          "usage": "Corner framing graphic or story card visual backdrop"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1615919737249-965d68c7e439?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwyfHx3aGltc2ljYWwlMjBsaWdodCUyMHBpbmslMjBmbG93ZXJzJTIwYWVzdGhldGljJTIwcm9tYW50aWMlMjB3ZWRkaW5nJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3OTQ0NTgzMTR8MA&ixlib=rb-4.1.0&q=85",
+          "usage": "Translucent rose petal macro texture for modal overlays or interactive feature cards"
+        }
+      ]
+    },
+    "floating_petals": {
+      "colors": ["#FFB6C1", "#FFC0CB", "#FFD1DC", "#FFF0F5"],
+      "speed": "slow ambient drift",
+      "blur": "soft Gaussian blur on background petals"
+    }
+  },
+  "image_urls": [
+    {
+      "category": "hero_background",
+      "url": "https://images.unsplash.com/photo-1582794543462-0d7922e50cf5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwxfHx3aGltc2ljYWwlMjBsaWdodCUyMHBpbmslMjBmbG93ZXJzJTIwYWVzdGhldGljJTIwcm9tYW50aWMlMjB3ZWRkaW5nJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3OTQ0NTgzMTR8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Whimsical light pink floral hero background with lush peonies"
+    },
+    {
+      "category": "page_pattern",
+      "url": "https://images.unsplash.com/photo-1640901646021-74984db23c54?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHw0fHxsaWdodCUyMHBpbmslMjBmbG93ZXJzJTIwc2VhbWxlc3MlMjBwYXR0ZXJuJTIwd2FsbHBhcGVyJTIwcGFzdGVsJTIwcGVvbmllcyUyMHJvc2VzfGVufDB8fHx8MTc5NDQ1ODMxNHww&ixlib=rb-4.1.0&q=85",
+      "alt": "Seamless floral pattern texture"
+    },
+    {
+      "category": "floral_accent",
+      "url": "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwyfHxzb2Z0JTIwcGluayUyMHBlb25pZXMlMjByb3NlcyUyMGZsb3JhbCUyMGJhY2tncm91bmQlMjB0ZXh0dXJlJTIwaGlnaCUyMHJlc29sdXRpb258ZW58MHx8fHwxNzk0NDU4MzIwfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Blush garden roses bouquet"
+    },
+    {
+      "category": "petal_texture",
+      "url": "https://images.unsplash.com/photo-1615919737249-965d68c7e439?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwyfHx3aGltc2ljYWwlMjBsaWdodCUyMHBpbmslMjBmbG93ZXJzJTIwYWVzdGhldGljJTIwcm9tYW50aWMlMjB3ZWRkaW5nJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3OTQ0NTgzMTR8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Macro translucent pink rose petal"
+    }
+  ],
   "layout_and_spacing": {
-    "container_padding": "px-4 sm:px-8 lg:px-16 max-w-7xl mx-auto",
-    "section_vertical_spacing": "py-20 sm:py-28 md:py-36",
-    "hero_height": "min-h-screen flex flex-col justify-between pt-24 pb-12",
-    "bento_masonry_grid": "columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
-  },
-  "visual_enhancers": {
-    "floating_petals": "Canvas or Framer Motion based ambient rose petals softly drifting and rotating down the screen with CSS pointer-events-none and low opacity (0.75)",
-    "editorial_marquee": "Infinite smooth scrolling ticker with romantic typography ('CELEBRATING ETIENNE & ISABELLE • OCT 24, 2026 • CHÂTEAU DE DE LA COUR •') in low contrast wine text on blush backdrop",
-    "glassmorphism_nav": "Fixed top bar with backdrop-blur-md bg-[#FAF7F2]/80 border-b border-[#4A1525]/10 z-50 transition-all duration-300",
-    "polaroid_wish_cards": "Masonry wish cards styled like physical high-end wedding polaroids: 1px border border-[#4A1525]/15 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-5 bg-white"
-  },
-  "key_features_implementation": {
-    "hero_countdown": {
-      "behavior": "Real-time ticking countdown to target date (Oct 24, 2026 16:00:00). Displaying Days, Hours, Minutes, Seconds with smooth digit transition animations. Line-by-line kinetic reveal of couple names on page mount.",
-      "data_testids": {
-        "countdown_container": "wedding-countdown-timer",
-        "days": "countdown-days",
-        "hours": "countdown-hours",
-        "minutes": "countdown-minutes",
-        "seconds": "countdown-seconds"
-      }
-    },
-    "guestbook_masonry": {
-      "behavior": "Guests submit name, message, RSVP status, and optional photo upload/preset selector. Instantly inserts into masonry wall of wishes. Admin toggle enables deletion of posts with test-id confirmation.",
-      "data_testids": {
-        "form": "guestbook-form",
-        "input_name": "guestbook-name-input",
-        "input_message": "guestbook-message-input",
-        "input_photo": "guestbook-photo-input",
-        "submit_button": "guestbook-submit-button",
-        "masonry_wall": "guestbook-masonry-wall",
-        "wish_card": "guestbook-wish-card",
-        "admin_toggle": "admin-mode-toggle",
-        "delete_button": "guestbook-delete-button"
-      }
-    },
-    "schedule_and_venue": {
-      "behavior": "Interactive timeline cards detailing Ceremony, Cocktail Reception, Banquet, and Dancing with Google Maps integration link.",
-      "data_testids": {
-        "schedule_section": "schedule-section",
-        "rsvp_cta": "hero-rsvp-button"
-      }
+    "philosophy": "Generous spacing (py-16 to py-24), floating bento-style glass cards over continuous soft floral wallpaper background",
+    "container_padding": "px-4 sm:px-8 lg:px-16",
+    "card_padding": "p-6 sm:p-8",
+    "grid_modes": {
+      "guestbook_masonry": "columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
     }
   },
-  "image_urls": {
-    "hero_bg": "https://images.unsplash.com/photo-1676027647672-1230463791a9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHw0fHx3ZWRkaW5nJTIwZGlubmVyJTIwdGFibGUlMjBvdXRkb29yJTIwcm9tYW50aWN8ZW58MHx8fHwxNzk0NDU2MTMxfDA&ixlib=rb-4.1.0&q=85",
-    "couple_portrait": "https://images.unsplash.com/photo-1772999245623-8825de0f4245?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwxfHxyb21hbnRpYyUyMHdlZGRpbmclMjBjb3VwbGUlMjBzdW5zZXQlMjBib3VxdWV0JTIwdmVudWV8ZW58MHx8fHwxNzk0NDU2MTI1fDA&ixlib=rb-4.1.0&q=85",
-    "floral_detail": "https://images.unsplash.com/photo-1782038522762-c170dc4974a7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NTYxODF8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwYm91cXVldCUyMGZsb3dlcnMlMjBsdXh1cnl8ZW58MHx8fHwxNzk0NDU2MTMwfDA&ixlib=rb-4.1.0&q=85",
-    "peonies_close_up": "https://images.unsplash.com/photo-1782038522861-22e8c23c96e5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NTYxODF8MHwxfHNlYXJjaHwyfHx3ZWRkaW5nJTIwYm91cXVldCUyMGZsb3dlcnMlMjBsdXh1cnl8ZW58MHx8fHwxNzk0NDU2MTMwfDA&ixlib=rb-4.1.0&q=85",
-    "venue_tablescape": "https://images.unsplash.com/photo-1524777313293-86d2ab467344?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwyfHx3ZWRkaW5nJTIwZGlubmVyJTIwdGFibGUlMjBvdXRkb29yJTIwcm9tYW50aWN8ZW58MHx8fHwxNzk0NDU2MTMxfDA&ixlib=rb-4.1.0&q=85"
+  "motion_and_interactions": {
+    "hero": "Gentle pulse countdown numbers with entrance opacity fade-in",
+    "petals": "Framer motion ambient floating particles drifting down with slight rotation",
+    "cards": "Hover slight lift (-translate-y-1) and soft rose shadow glow shadow-rose-200/50"
+  },
+  "accessibility": {
+    "contrast_ratio": "APCA standard compliant. All card text printed on white/90 background with #3B1E28 font for high legibility.",
+    "test_ids": "Ensure data-testid attributes remain intact on all buttons, forms, countdown units, and guestbook items."
   },
   "instructions_to_main_agent": [
-    "Note: Ensure React components are implemented as .js / .jsx files as specified in the environment setup.",
-    "Implement real-time ticking logic for the live countdown hero timer with initial line-by-line opacity / slide text animations for couple names.",
-    "Ensure floating rose petals animation runs smoothly on continuous loop without interfering with text selection or button clicking (pointer-events-none).",
-    "Build the guestbook with live state persistence (local storage or backend endpoint) allowing photo attachment and admin delete post functionality.",
-    "Add data-testid attributes to all form inputs, action buttons, countdown cells, and guestbook items as listed.",
-    "Use generous whitespace (py-24 to py-36) and high-contrast typography in Cormorant Garamond / Plus Jakarta Sans."
+    "Replace dark tablescape image in Hero.jsx with the new whimsical light-pink peony hero URL.",
+    "Update Hero scrim to ensure text remains crisp and highly legible over the lighter floral background.",
+    "Apply the seamless pink floral pattern with light opacity (bg-pink-50/60 blend or subtle overlay) across section containers and App body background.",
+    "Update card surfaces to semi-transparent white glassmorphism (bg-white/80 backdrop-blur-md border-rose-200/40) for a dreamy, high-end aesthetic.",
+    "Ensure floating petals use light pink/blush gradient colors matching the new palette."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Do NOT use dark colors or dark gradients as full backgrounds.",
+    "Never hide navigation or crucial text under unreadable overlays.",
+    "Include data-testid on key elements."
   ]
 }

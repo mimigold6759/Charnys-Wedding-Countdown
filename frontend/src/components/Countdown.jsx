@@ -7,19 +7,19 @@ const Unit = ({ value, label, testid }) => (
     <div className="relative">
       <span
         key={value}
-        className="digit-tick font-mono-digits font-light text-4xl sm:text-6xl md:text-7xl tracking-tight text-[#FAF7F2]"
+        className="digit-tick font-mono-digits font-light text-4xl sm:text-6xl md:text-7xl tracking-tight text-[#4A1229] drop-shadow-[0_2px_10px_rgba(255,255,255,0.9)]"
       >
         {pad(value)}
       </span>
     </div>
-    <span className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-sans font-medium text-[#FAF7F2]/60">
+    <span className="text-[10px] sm:text-xs uppercase tracking-[0.3em] font-sans font-semibold text-[#7A2E4B]/70">
       {label}
     </span>
   </div>
 );
 
 const Sep = () => (
-  <span className="font-serif-display font-light text-3xl sm:text-5xl md:text-6xl text-[#D4AF37]/70 pb-6 sm:pb-8 select-none">
+  <span className="font-serif-display font-light text-3xl sm:text-5xl md:text-6xl text-[#D87093]/80 pb-6 sm:pb-8 select-none">
     ·
   </span>
 );
@@ -46,7 +46,7 @@ export const Countdown = ({ target }) => {
   if (t.done) {
     return (
       <div data-testid="wedding-countdown-timer" className="text-center">
-        <p className="font-serif-display italic text-4xl sm:text-6xl text-[#FAF7F2]">
+        <p className="font-serif-display italic text-4xl sm:text-6xl text-[#4A1229]">
           The day has arrived
         </p>
       </div>
