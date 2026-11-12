@@ -173,7 +173,7 @@ export const AdminSignIn = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && unlockAdmin()}
-            placeholder="Couple's password"
+            placeholder="Password"
             className="bg-transparent outline-none text-sm text-[#3B1E28] placeholder:text-[#7A5965]"
           />
           <button
