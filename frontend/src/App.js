@@ -76,7 +76,7 @@ function App() {
         <AdminSignIn />
       </div>
 
-      <Marquee items={["Charny is getting married!!", "January 24, 2027"]} attached />
+      <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
 
       <footer data-testid="site-footer" className="relative z-10 bg-[#4A1229] text-[#FFF9FB] px-4 sm:px-8 py-16 sm:py-24 text-center border-t-0">
         <p className="font-script text-4xl sm:text-6xl text-[#FFF9FB] drop-shadow-[0_4px_14px_rgba(120,120,130,0.35)] mb-4">
