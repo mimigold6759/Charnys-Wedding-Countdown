@@ -30,7 +30,7 @@ export const Hero = ({ config, onGuestbookClick }) => {
         className="relative z-10 flex items-center justify-between px-5 sm:px-10 pt-6"
       >
         <span className="font-serif-display text-2xl sm:text-3xl text-[#7A2E4B] tracking-tight">
-          E<span className="text-[#D87093] italic">&</span>L
+          YD<span className="text-[#D87093] italic">&</span>C
         </span>
         <button
           data-testid="nav-guestbook-link"
@@ -51,22 +51,16 @@ export const Hero = ({ config, onGuestbookClick }) => {
 
         <h1 className="font-serif-display text-[#3B1E28] leading-[1.02]">
           <span
-            className="reveal-line block text-5xl sm:text-7xl md:text-8xl font-medium tracking-tight drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)]"
+            className="reveal-line block text-7xl sm:text-8xl md:text-9xl font-medium tracking-tight drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)]"
             style={{ animationDelay: "0.45s" }}
           >
             {config.bride}
           </span>
           <span
-            className="reveal-line block text-3xl sm:text-5xl md:text-6xl italic font-light text-[#D87093] my-1 sm:my-3"
-            style={{ animationDelay: "0.75s" }}
+            className="reveal-line block text-2xl sm:text-3xl md:text-4xl italic font-light text-[#D87093] mt-3 sm:mt-5"
+            style={{ animationDelay: "0.85s" }}
           >
-            &
-          </span>
-          <span
-            className="reveal-line block text-5xl sm:text-7xl md:text-8xl font-medium tracking-tight drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)]"
-            style={{ animationDelay: "1.05s" }}
-          >
-            {config.groom}
+            {config.tagline}
           </span>
         </h1>
 

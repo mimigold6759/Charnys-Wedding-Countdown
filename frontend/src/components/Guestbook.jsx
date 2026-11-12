@@ -104,7 +104,7 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
           A wall of wishes
         </h2>
         <p className="mt-5 text-base sm:text-lg text-[#3B1E28]/70 max-w-xl mx-auto leading-relaxed">
-          Leave a few words — and a photograph, if you like — for Emma & Liam to keep forever.
+          Leave a few words — and a photograph, if you like — for Charny to keep forever.
         </p>
       </div>
 

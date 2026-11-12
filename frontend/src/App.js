@@ -7,8 +7,8 @@ import { Petals } from "@/components/Petals";
 import { Guestbook } from "@/components/Guestbook";
 
 const WEDDING = {
-  bride: "Emma",
-  groom: "Liam",
+  bride: "Charny",
+  tagline: "is getting married!!",
   dateLabel: "January 24, 2027",
   venue: "Rosewood Hall, Napa Valley",
   targetDate: "2027-01-24T16:00:00",
@@ -41,6 +41,7 @@ function App() {
     <div className="grain floral-page min-h-screen" data-testid="evermore-app">
       <Petals count={16} />
       <Hero config={WEDDING} onGuestbookClick={scrollToGuestbook} />
+      {/* hero now shows: Charny / is getting married!! */}
 
       <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
 
@@ -50,7 +51,7 @@ function App() {
 
       <footer data-testid="site-footer" className="relative bg-[#4A1229]/95 backdrop-blur-sm text-[#FFF9FB] px-4 sm:px-8 py-16 sm:py-24 text-center">
         <p className="font-serif-display text-4xl sm:text-6xl tracking-tight mb-4">
-          {WEDDING.bride} <span className="italic text-[#E89FAD]">&</span> {WEDDING.groom}
+          {WEDDING.bride} <span className="italic text-[#E89FAD] text-2xl sm:text-4xl">{WEDDING.tagline}</span>
         </p>
         <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-[#FFF9FB]/60">
           {WEDDING.dateLabel} — {WEDDING.venue}
