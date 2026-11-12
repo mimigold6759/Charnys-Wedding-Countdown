@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Lock, Trash2, BookOpen } from "lucide-react";
 import { GuestbookForm } from "./GuestbookForm";
 import { openKeepsake } from "./Keepsake";
-
+import { SongManager } from "./SongManager";
 const ADMIN_PASS = "charny2027";
 
 const WishCard = ({ entry, adminMode, onDelete }) => {
@@ -129,7 +129,7 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
   );
 });
 
-export const AdminSignIn = () => {
+export const AdminSignIn = ({ songs, onSongsChange }) => {
   const [adminMode, setAdminMode] = useState(false);
   const [showAdminPrompt, setShowAdminPrompt] = useState(false);
   const [password, setPassword] = useState("");
@@ -207,6 +207,7 @@ export const AdminSignIn = () => {
               Exit
             </button>
           </div>
+          <SongManager songs={songs} onSongsChange={onSongsChange} />
           <div className="mt-4 flex justify-center">
             <button
               data-testid="download-keepsake-button"
