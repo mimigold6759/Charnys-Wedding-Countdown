@@ -101,7 +101,7 @@ export const Guestbook = forwardRef(function Guestbook(_, ref) {
           A Wall of Mazel Tovs
         </h2>
         <p className="mt-5 text-base sm:text-lg text-[#3B1E28]/70 max-w-xl mx-auto leading-relaxed">
-          Leave a wish, a memory or a photograph that will last long after the last dance ends.
+          Leave a wish, a memory, or a photograph that will last long after the last dance ends.
         </p>
       </div>
 
