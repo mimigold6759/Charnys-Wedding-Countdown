@@ -112,7 +112,7 @@ export const Hero = ({ config, onGuestbookClick }) => {
             Save the date!
           </span>
           <span
-            className="reveal-line block text-8xl sm:text-9xl md:text-[10rem] font-medium tracking-tight drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)]"
+            className="reveal-line block font-script text-8xl sm:text-9xl md:text-[10rem] text-[#4A1229] drop-shadow-[0_4px_14px_rgba(120,120,130,0.55)]"
             style={{ animationDelay: "0.3s" }}
           >
             {config.bride}
