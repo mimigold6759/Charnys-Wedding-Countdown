@@ -29,11 +29,8 @@ export const PhotoGallery = forwardRef(function PhotoGallery(_, ref) {
     >
       <div className="is-visible reveal-on-scroll text-center mb-12 sm:mb-16">
         <h2 className="font-serif-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-[#3B1E28]">
-          Moments shared
+          Photo Gallery
         </h2>
-        <p className="mt-5 text-base sm:text-lg text-[#3B1E28]/70 max-w-xl mx-auto leading-relaxed">
-          Every photo guests have left on the wall, gathered in one place.
-        </p>
       </div>
 
       {photos.length === 0 ? (
