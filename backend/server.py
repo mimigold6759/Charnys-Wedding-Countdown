@@ -1,12 +1,18 @@
 import asyncio
 import os
+import re
+import ipaddress
 import logging
 import uuid
 from contextlib import suppress
 from datetime import datetime, timezone
+from html import escape
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import List, Optional
+from urllib.parse import urlparse
 
+import httpx
 import requests
 from dotenv import load_dotenv
 from fastapi import FastAPI, APIRouter, File, Form, HTTPException, Response, UploadFile
@@ -26,6 +32,129 @@ ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', '')
 APP_NAME = "evermore"
 MAX_UPLOAD_BYTES = 8 * 1024 * 1024
 ALLOWED_TYPES = {"image/jpeg", "image/png", "image/webp", "image/gif"}
+
+EMAIL_BASE_URL = "https://integrations.emergentagent.com"
+EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY")
+EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Evermore")
+WISH_ALERT_EMAIL = os.environ.get("WISH_ALERT_EMAIL")
+
+_SHORTENERS = ("bit.ly", "tinyurl.com", "t.co", "is.gd", "cutt.ly", "goo.gl", "rebrand.ly")
+_CRED_ASK = ("reply with your password", "reply with the code", "send your password", "cvv",
+             "send us your password", "enter your password below", "confirm your card number",
+             "your full card number", "seed phrase", "recovery phrase", "verify your card",
+             "social security number", "confirm your bank details")
+_HOSTISH = re.compile(r"\b(?:https?://)?((?:[a-z0-9-]+\.)+[a-z]{2,})", re.I)
+
+
+def _host_ok(host: str) -> bool:
+    if not host or "xn--" in host:
+        return False
+    try:
+        ipaddress.ip_address(host)
+        return False
+    except ValueError:
+        pass
+    return not any(host == s or host.endswith("." + s) for s in _SHORTENERS)
+
+
+def _same_site(shown: str, real: str) -> bool:
+    return shown == real or real.endswith("." + shown) or shown.endswith("." + real)
+
+
+class _EmailScan(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.tags, self.urls, self.anchors = set(), [], []
+        self._href, self._text = None, []
+
+    def handle_starttag(self, tag, attrs):
+        self.tags.add(tag.lower())
+        self.urls += [v for k, v in attrs if k.lower() in ("href", "src") and v]
+        if tag.lower() == "a":
+            self._href = dict((k.lower(), v) for k, v in attrs).get("href")
+            self._text = []
+
+    def handle_data(self, data):
+        if self._href is not None:
+            self._text.append(data)
+
+    def handle_endtag(self, tag):
+        if tag.lower() == "a" and self._href is not None:
+            self.anchors.append((self._href, "".join(self._text)))
+            self._href, self._text = None, []
+
+
+def _assert_safe_email(subject: str, html: str) -> None:
+    scan = _EmailScan()
+    scan.feed(html)
+    if scan.tags & {"form", "input", "textarea", "select"}:
+        raise ValueError("No forms or input fields in email (G2)")
+    body = f"{subject}\n{html}".lower()
+    for p in _CRED_ASK:
+        if p in body:
+            raise ValueError(f"Email asks the recipient for credentials: {p!r} (G2)")
+    for url in scan.urls:
+        low = url.strip().lower()
+        if low.startswith(("mailto:", "tel:", "cid:", "#")):
+            continue
+        if not low.startswith("https://"):
+            raise ValueError(f"Email links/assets must be absolute https: {url!r} (G3)")
+        host = urlparse(low).hostname or ""
+        if not _host_ok(host) or urlparse(low).username is not None:
+            raise ValueError(f"Shortened, numeric-host or credential-bearing URL: {url!r} (G3)")
+    for href, text in scan.anchors:
+        real = urlparse(href.strip().lower()).hostname or ""
+        if not real:
+            continue
+        for m in _HOSTISH.finditer(text):
+            if not _same_site(m.group(1).lower(), real):
+                raise ValueError(f"Anchor text {m.group(1)!r} != real link host {real!r} (G3)")
+
+
+async def send_email(*, to: str, subject: str, html: str) -> Optional[str]:
+    _assert_safe_email(subject, html)
+    payload = {"to": [to], "subject": subject, "html": html, "from_name": EMAIL_FROM_NAME}
+    if WISH_ALERT_EMAIL:
+        payload["contact_email"] = WISH_ALERT_EMAIL
+    try:
+        async with httpx.AsyncClient(timeout=30) as client:
+            resp = await client.post(
+                f"{EMAIL_BASE_URL}/api/v1/email/send",
+                headers={"X-Email-Key": EMAIL_KEY},
+                json=payload,
+            )
+        resp.raise_for_status()
+        return resp.json().get("id")
+    except httpx.HTTPStatusError as e:
+        try:
+            code = e.response.json().get("code", "")
+        except ValueError:
+            code = ""
+        if code in ("insufficient_credits", "integration_disabled", "daily_limit_reached"):
+            logging.getLogger(__name__).warning("Email paused: %s", code)
+        else:
+            logging.getLogger(__name__).error("Email send failed: %s %s", e.response.status_code, e.response.text)
+        return None
+    except Exception as e:
+        logging.getLogger(__name__).error("Email send error: %s", e)
+        return None
+
+
+def wish_alert_html(name: str, message: str, has_photo: bool) -> str:
+    photo_line = (
+        '<p style="font-size:14px;color:#7A5965">They attached a photo — open the guestbook wall to see it.</p>'
+        if has_photo else ""
+    )
+    return (
+        '<table role="presentation" width="100%"><tr><td style="padding:24px;'
+        'font-family:Georgia,serif;background:#FFF9FB">'
+        f'<p style="font-size:12px;letter-spacing:3px;color:#D87093;text-transform:uppercase">A new wish on the wall</p>'
+        f'<p style="font-size:20px;color:#3B1E28;font-style:italic">&ldquo;{escape(message)}&rdquo;</p>'
+        f'<p style="font-size:16px;color:#C75B80;font-style:italic">&mdash; {escape(name)}</p>'
+        f"{photo_line}"
+        f'<p style="font-size:12px;color:#8C827A;margin-top:24px">Sent by {escape(EMAIL_FROM_NAME)}. We never '
+        "ask for your password or card details by email.</p></td></tr></table>"
+    )
 
 STORAGE_BASE = (os.environ.get("INTEGRATION_PROXY_URL") or "").strip() or "https://integrations.emergentagent.com"
 STORAGE_URL = STORAGE_BASE.rstrip("/") + "/objstore/api/v1/storage"
@@ -145,6 +274,14 @@ async def create_entry(
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     await db.guestbook_entries.insert_one(doc)
+    if EMAIL_KEY and WISH_ALERT_EMAIL:
+        asyncio.create_task(
+            send_email(
+                to=WISH_ALERT_EMAIL,
+                subject=f"New wish on the wall from {name}",
+                html=wish_alert_html(name, message, bool(photo_path)),
+            )
+        )
     return serialize(doc)
 
 
