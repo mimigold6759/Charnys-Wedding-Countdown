@@ -1,0 +1,75 @@
+import { useEffect, useRef } from "react";
+import "@/App.css";
+import { Toaster } from "sonner";
+import { Hero } from "@/components/Hero";
+import { Marquee } from "@/components/Marquee";
+import { Petals } from "@/components/Petals";
+import { Guestbook } from "@/components/Guestbook";
+
+const WEDDING = {
+  bride: "Emma",
+  groom: "Liam",
+  dateLabel: "June 12, 2027",
+  venue: "Rosewood Hall, Napa Valley",
+  targetDate: "2027-06-12T16:00:00",
+};
+
+function App() {
+  const guestbookRef = useRef(null);
+
+  const scrollToGuestbook = () => {
+    guestbookRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll(".reveal-on-scroll").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="grain bg-[#FAF7F2] min-h-screen" data-testid="evermore-app">
+      <Petals count={16} />
+      <Hero config={WEDDING} onGuestbookClick={scrollToGuestbook} />
+
+      <Marquee
+        items={[
+          "Emma & Liam",
+          "October 24, 2026",
+          "Rosewood Hall",
+          "forever begins",
+        ]}
+      />
+
+      <Guestbook ref={guestbookRef} />
+
+      <Marquee items={["two hearts", "one promise", "a lifetime to go"]} />
+
+      <footer data-testid="site-footer" className="bg-[#4A1525] text-[#FAF7F2] px-4 sm:px-8 py-16 sm:py-24 text-center">
+        <p className="font-serif-display text-4xl sm:text-6xl tracking-tight mb-4">
+          {WEDDING.bride} <span className="italic text-[#D4AF37]">&</span> {WEDDING.groom}
+        </p>
+        <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-[#FAF7F2]/60">
+          {WEDDING.dateLabel} — {WEDDING.venue}
+        </p>
+        <p className="mt-10 font-serif-display italic text-lg text-[#FAF7F2]/50">
+          evermore
+        </p>
+      </footer>
+
+      <Toaster position="bottom-center" richColors />
+    </div>
+  );
+}
+
+export default App;
