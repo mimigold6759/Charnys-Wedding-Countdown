@@ -105,15 +105,10 @@
     will-change: transform, opacity;
 }
 
-/* Scroll reveal */
+/* Scroll reveal — content always visible, animation optional */
 .reveal-on-scroll {
-    opacity: 0;
-    transform: translateY(36px);
-    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal-on-scroll.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
 }
 
 /* Grain overlay */
