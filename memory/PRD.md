@@ -34,6 +34,9 @@ A website which has a live countdown as its dominant feature. Countdown for a we
 ## Updates (continued 4)
 - 2026-11-12 (user request): Petal shower — posting a wish now triggers a burst of ~40 pink petals raining across the screen for a few seconds (custom "evermore:wish-posted" event fired by GuestbookForm, rendered by a burst layer in Petals.jsx, auto-clears). Verified: posted a test wish, 40 burst petals appeared, wish landed on the wall, burst cleared. Also since last PRD update: "Save the date!" glass pill above hero name; "Charny" restyled in Great Vibes script with soft grey drop shadow; "Ceremony at 4:30 PM" line removed; admin mode now has an Exit link.
 
+## Updates (continued 5)
+- 2026-11-12 (user agentic edits, batch 3): Footer now reads "Yaakov Duvid & Charny" in Great Vibes script (pink ampersand), venue removed from footer (date only), and "evermore" replaced with "made with love for Charny ♥". Verified by screenshot.
+
 ## Backlog
 - **P0**: Real couple names/date/venue (currently placeholder) — change `WEDDING` const or build a settings panel.
 - **P1**: RSVP form (attending/declined + meal choice) with a private responses list for the couple.

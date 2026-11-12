@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import "@/App.css";
 import { Toaster } from "sonner";
+import { Heart } from "lucide-react";
 import { Hero } from "@/components/Hero";
 import { Marquee } from "@/components/Marquee";
 import { Petals } from "@/components/Petals";
@@ -60,7 +61,7 @@ function App() {
           {WEDDING.dateLabel}
         </p>
         <p className="mt-10 font-serif-display italic text-lg text-[#FFF9FB]/50">
-          evermore
+          made with love for Charny <Heart size={13} className="inline-block -mt-1 text-[#E89FAD]" fill="#E89FAD" strokeWidth={0} />
         </p>
       </footer>
 
