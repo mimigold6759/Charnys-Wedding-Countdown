@@ -51,13 +51,13 @@ export const Hero = ({ config, onGuestbookClick }) => {
 
         <h1 className="font-serif-display text-[#3B1E28] leading-[1.02]">
           <span
-            className="reveal-line block text-7xl sm:text-8xl md:text-9xl font-medium tracking-tight drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)]"
+            className="reveal-line block text-8xl sm:text-9xl md:text-[10rem] font-medium tracking-tight drop-shadow-[0_2px_12px_rgba(255,255,255,0.8)]"
             style={{ animationDelay: "0.45s" }}
           >
             {config.bride}
           </span>
           <span
-            className="reveal-line block text-2xl sm:text-3xl md:text-4xl italic font-light text-[#D87093] mt-3 sm:mt-5"
+            className="reveal-line block text-xl sm:text-2xl md:text-3xl italic font-light text-[#7A2E4B] bg-white/50 backdrop-blur-sm rounded-full inline-block px-6 py-2 mt-4 sm:mt-6"
             style={{ animationDelay: "0.85s" }}
           >
             {config.tagline}
