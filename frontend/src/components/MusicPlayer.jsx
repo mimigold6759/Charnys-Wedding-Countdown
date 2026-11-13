@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Music, Pause } from "lucide-react";
 
 const STATIC_PLAYLIST = [
-  { src: "/song.mp3", title: "Our Song" }
+  { src: "/song.mp3", title: "Song 1" },
+  { src: "/song1.mp3", title: "Song 2" }
 ];
 
 export const MusicPlayer = ({ playlist }) => {
@@ -11,24 +12,28 @@ export const MusicPlayer = ({ playlist }) => {
   const [playing, setPlaying] = useState(false);
   const [trackIndex, setTrackIndex] = useState(0);
 
-  const current = activePlaylist[trackIndex];
+  const safeIndex = trackIndex < activePlaylist.length ? trackIndex : 0;
+  const current = activePlaylist[safeIndex];
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    const onEnded = () => setTrackIndex((i) => (i + 1) % activePlaylist.length);
-    audio.addEventListener("ended", onEnded);
-    return () => {
-      audio.removeEventListener("ended", onEnded);
-    };
-  }, [activePlaylist.length, trackIndex]);
+    if (playing) {
+      audio.play().catch(() => {});
+    }
+  }, [safeIndex, current?.src]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.load();
-    if (playing) audio.play().catch(() => {});
-  }, [trackIndex]); // eslint-disable-line react-hooks/exhaustive-deps
+  const handleEnded = () => {
+    if (activePlaylist.length <= 1) {
+      const audio = audioRef.current;
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+      return;
+    }
+    setTrackIndex((i) => (i + 1) % activePlaylist.length);
+  };
 
   const toggle = () => {
     const audio = audioRef.current;
@@ -45,9 +50,12 @@ export const MusicPlayer = ({ playlist }) => {
 
   return (
     <>
-      <audio ref={audioRef} preload="auto">
-        <source src="/song.mp3" type="audio/mpeg" />
-      </audio>
+      <audio
+        ref={audioRef}
+        src={current.src}
+        preload="auto"
+        onEnded={handleEnded}
+      />
       <button
         data-testid="music-player-toggle"
         onClick={toggle}
