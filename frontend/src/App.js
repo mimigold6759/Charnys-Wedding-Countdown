@@ -8,9 +8,13 @@ import { Petals } from "@/components/Petals";
 import { Guestbook, AdminSignIn } from "@/components/Guestbook";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { MusicPlayer } from "@/components/MusicPlayer";
-import axios from "axios";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "./firebase";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const DEFAULT_SONGS = [
+  { id: "static-1", src: "/song.mp3", title: "Song 1", isStatic: true },
+  { id: "static-2", src: "/song1.mp3", title: "Song 2", isStatic: true },
+];
 
 const WEDDING = {
   bride: "Charny",
@@ -25,25 +29,18 @@ const WEDDING = {
 
 function App() {
   const guestbookRef = useRef(null);
-  const [songs, setSongs] = useState([]);
-  const [adminPassword, setAdminPassword] = useState("");
+  const [songs, setSongs] = useState(DEFAULT_SONGS);
 
   useEffect(() => {
-    axios
-      .get(`${API}/songs`)
-      .then((res) => setSongs(res.data.songs || []))
-      .catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    const onAdminOn = (e) => setAdminPassword(e.detail);
-    const onAdminOff = () => setAdminPassword("");
-    window.addEventListener("evermore:admin-on", onAdminOn);
-    window.addEventListener("evermore:admin-off", onAdminOff);
-    return () => {
-      window.removeEventListener("evermore:admin-on", onAdminOn);
-      window.removeEventListener("evermore:admin-off", onAdminOff);
+    const loadSongs = async () => {
+      try {
+        const q = query(collection(db, "songs"), orderBy("created_at", "asc"));
+        const snap = await getDocs(q);
+        const customSongs = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        setSongs([...DEFAULT_SONGS, ...customSongs]);
+      } catch {}
     };
+    loadSongs();
   }, []);
 
   const scrollToGuestbook = () => {
@@ -88,7 +85,7 @@ function App() {
           <MusicPlayer playlist={songs} />
         </div>
 
-        <AdminSignIn onAdminChange={setAdminPassword} adminPassword={adminPassword} songs={songs} onSongsChange={setSongs} />
+        <AdminSignIn songs={songs} onSongsChange={setSongs} />
       </div>
 
       <Marquee items={["Charny is getting married!!", "January 24, 2027"]} />
